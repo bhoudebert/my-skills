@@ -15,9 +15,9 @@ sh scripts/setup-hooks.sh
 @@components_commands@@
 ```
 @@/if@@@@#unless monorepo@@```bash
-@@setup_cmd@@
-@@test_cmd@@
-```
+@@#if setup_cmd@@@@setup_cmd@@
+@@/if@@@@#if test_cmd@@@@test_cmd@@
+@@/if@@```
 @@/unless@@
 <!-- A minimal example of use, with its real output. -->
 

@@ -185,6 +185,19 @@ describe("every stack", () => {
     assert.ok(!("README.md" in JSON.parse(read(target, PROVENANCE)).files), "a file that was already there is not recorded as generated");
   });
 
+  test("a project without tests, lint or a layout does not get blank lines or a wrong layout", () => {
+    const root = render({ ...BASE, profile: "python", setup_cmd: "pip install -r requirements.txt", quality_cmd: "python -m compileall -q .", lint_cmd: "", format_cmd: "", test_cmd: "", src_dir: "", test_dir: "" }, "bare");
+    const agents = read(root, "AGENTS.md");
+    assert.match(agents, /pip install -r requirements\.txt {6}# set up the project\npython -m compileall -q \. {4}# the gate\nsh scripts\/setup-hooks\.sh/);
+    assert.doesNotMatch(agents, /^\s+# (tests only|lint|format)$/m);
+    assert.match(agents, /- Language and tools: Python\.\n/);
+    assert.doesNotMatch(agents, /Code under/);
+    assert.match(read(root, ".github/copilot-instructions.md"), /- Stack: Python\. Gate: `python -m compileall -q \.`\./);
+    const mono = render({ ...MONO, components: MONO.components.map((c) => (c.name === "web" ? { ...c, lint_cmd: "", format_cmd: "" } : c)) }, "bare-mono");
+    assert.doesNotMatch(read(mono, "web/AGENTS.md"), /^\s+# (lint|format)$/m);
+    assert.doesNotMatch(read(mono, ".github/instructions/web.instructions.md"), /Lint:|Format:/);
+  });
+
   test("a missing answer or an unknown profile fails loudly", () => {
     assert.throws(() => render({ ...BASE, profile: "cobol" }), (e) => e instanceof UserError && /Unknown profile/.test(e.message));
     assert.throws(() => render({ project_name: "x", profile: "node" }), (e) => e instanceof UserError && /Missing required answer/.test(e.message));

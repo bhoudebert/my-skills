@@ -86,19 +86,19 @@ scope or its pull request, and each component's gate must pass.
 
 @@#if monorepo@@- Stacks and layout: see the components table above; each component keeps its own tests next to its code.
 - Commit scopes are the component names (`feat(api): ...`), or `deps`, `docs`, `ci`, `release` for the rest.
-@@/if@@@@#unless monorepo@@- Language and tools: @@label@@. Layout: code under `@@src_dir@@/`, tests under `@@test_dir@@/`.
+@@/if@@@@#unless monorepo@@- Language and tools: @@label@@.@@#if src_dir@@ Code under `@@src_dir@@/`@@#if test_dir@@, tests under `@@test_dir@@/`@@/if@@.@@/if@@
 @@/unless@@
 
 ## Useful commands
 
 ```
 @@#if monorepo@@@@components_commands@@
-@@/if@@@@#unless monorepo@@@@setup_cmd@@      # set up the project
-@@quality_cmd@@    # the gate
-@@test_cmd@@       # tests only
-@@lint_cmd@@       # lint
-@@format_cmd@@     # format
-@@/unless@@sh scripts/setup-hooks.sh   # install the git hooks (once per clone)
+@@/if@@@@#unless monorepo@@@@#if setup_cmd@@@@setup_cmd@@      # set up the project
+@@/if@@@@quality_cmd@@    # the gate
+@@#if test_cmd@@@@test_cmd@@       # tests only
+@@/if@@@@#if lint_cmd@@@@lint_cmd@@       # lint
+@@/if@@@@#if format_cmd@@@@format_cmd@@     # format
+@@/if@@@@/unless@@sh scripts/setup-hooks.sh   # install the git hooks (once per clone)
 @@#if nix@@nix develop              # the toolchains of every component (or direnv allow)
 @@/if@@```
 @@#if spec_driven@@

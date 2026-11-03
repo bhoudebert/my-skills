@@ -6,11 +6,11 @@ doing) are in the root `AGENTS.md`; this file adds what is specific to this comp
 ## Commands (run from this folder)
 
 ```
-@@setup_cmd@@      # set up
-@@test_cmd@@       # tests
-@@lint_cmd@@       # lint
-@@format_cmd@@     # format
-@@quality_cmd@@    # the gate: it must pass before you push
+@@#if setup_cmd@@@@setup_cmd@@      # set up
+@@/if@@@@#if test_cmd@@@@test_cmd@@       # tests
+@@/if@@@@#if lint_cmd@@@@lint_cmd@@       # lint
+@@/if@@@@#if format_cmd@@@@format_cmd@@     # format
+@@/if@@@@quality_cmd@@    # the gate: it must pass before you push
 ```
 
 ## Conventions
