@@ -43,13 +43,19 @@ Read the target folder: is it empty, or an existing repository? `ls`, `git log -
 what is there: the script skips existing files and reports them, and you merge by hand (the workflow's reasons are in the
 templates; keep the project's own wording where it already says the same thing).
 
-### 2. Interview, briefly
+### 2. Interview, briefly, and wait for the answer
 
-Ask only what you cannot see or default, in one message. If the user said not to ask questions, or cannot answer now (a
-subagent, a script), do not block: choose the defaults, state each one in one line in your report, and carry on. `references/interview.md` lists the questions, the defaults and the
-answers file. The essentials: project name and one-line description, GitHub owner/repo, the components (name, path, stack),
-the maintainer's handle, and these choices: a Nix dev shell (default no; yes when `nix` is installed and the user uses it), release automation (default yes), spec-driven (default no, single TS/JS-layout
-repos only), attribution trailers in commits (default: none allowed), a local-model reviewer (only with spec-driven).
+**Stop and ask before generating anything.** What you detected (stacks, GitHub owner and repo, the name) are facts you can state.
+The choices are the user's: the Nix dev shell, release automation, spec-driven, the attribution rule, the maintainer, and any
+command that does not fit what you saw (the quality gate above all). A default is a proposal, not a decision, so never apply
+one silently.
+
+Send **one message** with: what you found, then a numbered list of every choice with the default you suggest, and end with
+"Reply with changes, or say go." Then wait. `references/interview.md` has the questions and the answers file. Skip the wait
+only when the user said so in this conversation ("don't ask", "use the defaults"), or when no one can answer (a subagent, a
+script); in that case state each default you chose, in one line each, in your report.
+
+After the answers, before writing, show the dry-run file list (step 3) and let the user say go or exclude something.
 
 ### 3. Write the answers file and preview
 
