@@ -52,7 +52,7 @@ export function parseRemote(url) {
 }
 
 /** Whether a GitHub repository is private, from `gh` when it is installed and logged in; undefined when it cannot say. */
-function repositoryIsPrivate(owner, repo) {
+export function repositoryIsPrivate(owner, repo) {
   if (process.env.PROJECT_FOUNDATION_NO_GH) return undefined;
   try {
     const out = execFileSync("gh", ["repo", "view", `${owner}/${repo}`, "--json", "isPrivate", "-q", ".isPrivate"], {
@@ -134,6 +134,7 @@ export async function interview(target, asker, { hasNix = false, out = (t) => co
   let isPrivate = seen.isPrivate;
   if (isPrivate === undefined) isPrivate = await yesNo("Is the repository private?", false);
   else out(`GitHub says the repository is ${isPrivate ? "private" : "public"}.`);
+  answers.private = isPrivate;
   answers.codeql = isPrivate
     ? await yesNo("CodeQL code scanning on a private repository needs GitHub Code Security (paid). Do you have it?", false)
     : await yesNo("Run CodeQL code scanning (free on a public repository)?", true);

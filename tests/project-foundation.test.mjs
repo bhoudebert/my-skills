@@ -17,6 +17,8 @@ import path from "node:path";
 import { after, before, describe, test } from "node:test";
 import { fileURLToPath } from "node:url";
 import { PROVENANCE, init, main, status, upgrade } from "../skills/project-foundation/scripts/foundation.mjs";
+import { START, END, badgeBlock, badgeLines, insertBlock } from "../skills/project-foundation/scripts/lib/badges.mjs";
+import { loadVariables } from "../skills/project-foundation/scripts/lib/answers.mjs";
 import { detect, detectStacks, interview, parseRemote } from "../skills/project-foundation/scripts/lib/interview.mjs";
 import { UserError } from "../skills/project-foundation/scripts/lib/answers.mjs";
 
@@ -689,6 +691,73 @@ describe("init without an answers file", () => {
     const done = spawnSync(process.execPath, [script, "init"], { cwd: empty, encoding: "utf8", input: "" });
     assert.equal(done.status, 2);
     assert.match(done.stderr, /needs --config/);
+  });
+});
+
+describe("badges", () => {
+  const rootOf = (answers) => loadVariables({ ...BASE, profile: "node", ...answers }).root;
+
+  test("a public repository gets CI, CodeQL, release and licence; a private or unknown one only the licence", () => {
+    const base = "https://github.com/acme/demo";
+    const publicLines = badgeLines(rootOf({}), { visibility: "public" });
+    assert.equal(publicLines.length, 4);
+    assert.ok(publicLines[0].includes(`${base}/actions/workflows/ci.yml/badge.svg?branch=main`));
+    assert.ok(publicLines[1].includes("codeql.yml/badge.svg"));
+    assert.ok(publicLines[2].includes("img.shields.io/github/v/release/acme/demo"));
+    assert.ok(publicLines[3].includes("license-MIT") && publicLines[3].endsWith("(LICENSE)"));
+    for (const visibility of ["private", undefined]) {
+      const lines = badgeLines(rootOf({}), { visibility });
+      assert.equal(lines.length, 1, `${visibility}: nothing that needs access to draw`);
+      assert.match(lines[0], /license-MIT/);
+    }
+  });
+
+  test("only the badges that apply: no CodeQL badge without CodeQL, no release badge without release-please, none without a licence", () => {
+    const lines = badgeLines(rootOf({ codeql: false, release_please: false }), { visibility: "public" });
+    assert.deepEqual(lines.map((l) => l.slice(0, 8)), ["[![CI](h", "[![Licen"]);
+    assert.deepEqual(badgeLines(rootOf({ license: "Apache-2.0" }), { visibility: "private" }), []);
+    assert.match(badgeLines(rootOf({}), { visibility: "private", licenseFile: false })[0], /opensource\.org/);
+  });
+
+  test("the block goes under the first title, replaces itself, and leaves the rest alone", () => {
+    const block = badgeBlock(["[![A](a)](a)"]);
+    const readme = "# Demo\n\nA demo.\n\n## Usage\n\n# Another title\n";
+    const once = insertBlock(readme, block);
+    assert.equal(once, `# Demo\n\n${block}\n\nA demo.\n\n## Usage\n\n# Another title\n`);
+    assert.equal(insertBlock(once, block), once, "idempotent");
+    const next = insertBlock(once, badgeBlock(["[![B](b)](b)"]));
+    assert.ok(next.includes("[![B](b)](b)") && !next.includes("[![A](a)](a)"), "replaced between the markers");
+    assert.ok(next.startsWith("# Demo\n\n") && next.endsWith("# Another title\n"));
+    assert.equal(insertBlock("no title here\n", block), `${block}\n\nno title here\n`);
+    assert.ok(once.includes(START) && once.includes(END));
+    assert.equal(insertBlock("# T\n", block).split(START).length, 2);
+  });
+
+  test("the command prints by default, writes with --apply, and respects the visibility", () => {
+    const script = path.join(SKILL, "scripts", "foundation.mjs");
+    const env = { ...process.env, PROJECT_FOUNDATION_NO_GH: "1" };
+    const repo = fresh("badges");
+    init({ config: { ...BASE, profile: "go" }, target: repo });
+    writeFileSync(path.join(repo, "README.md"), "# demo\n\nA demo.\n");
+    const run = (...args) => spawnSync(process.execPath, [script, "badges", ...args], { cwd: repo, encoding: "utf8", env });
+    const unknown = run();
+    assert.equal(unknown.status, 0);
+    assert.match(unknown.stdout, /visibility unknown/);
+    assert.ok(!unknown.stdout.includes("actions/workflows"));
+    const printed = run("--public");
+    assert.ok(printed.stdout.includes("actions/workflows/ci.yml/badge.svg") && printed.stdout.includes(START));
+    assert.equal(read(repo, "README.md"), "# demo\n\nA demo.\n", "printing writes nothing");
+    assert.match(run("--public", "--apply").stdout, /README\.md updated/);
+    assert.match(read(repo, "README.md"), /^# demo\n\n<!-- badges:start -->\n\[!\[CI\]/);
+    assert.match(run("--public", "--apply").stdout, /already has these badges/);
+    assert.match(run("--private", "--apply").stdout, /README\.md updated/, "a change of visibility rewrites the block");
+    assert.ok(!read(repo, "README.md").includes("actions/workflows"));
+    const lost = fresh("nobadge");
+    init({ config: { ...BASE, profile: "go" }, target: lost });
+    rmSync(path.join(lost, "README.md"));
+    const missing = spawnSync(process.execPath, [script, "badges", "--apply", "--public"], { cwd: lost, encoding: "utf8", env });
+    assert.equal(missing.status, 2);
+    assert.match(missing.stderr, /README\.md not found/);
   });
 });
 

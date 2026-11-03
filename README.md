@@ -40,6 +40,7 @@ my-skills init                            # looks at the repository, asks what i
 my-skills init --dry-run                  # the same, listing what it would write
 my-skills status                          # which skill version made this repository, did the templates change since
 my-skills upgrade                         # what differs from the current templates; --apply writes the safe changes
+my-skills badges                          # a row of README badges that apply (--apply writes it between markers; --public/--private)
 my-skills list
 ```
 

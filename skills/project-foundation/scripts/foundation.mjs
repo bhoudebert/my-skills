@@ -4,6 +4,7 @@
 //   my-skills init                          look at the repository, ask what cannot be seen, generate
 //   my-skills init --config answers.json    the same, from an answers file (what an agent does)
 //   my-skills status | upgrade [--apply]    what changed in the templates since the repository was generated
+//   my-skills badges [--apply]              a row of badges for the README (printed, or written between markers)
 //   my-skills list | version
 // Every command takes --target <folder> (default: the current folder); init also --modules a,b, --dry-run, --force, --yes.
 //
@@ -17,7 +18,8 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { parseArgs } from "node:util";
 import { ASSETS, SKILL, TEMPLATES, UserError, loadVariables, readJson } from "./lib/answers.mjs";
-import { interview, lineAsker } from "./lib/interview.mjs";
+import { applyBadges, badgeBlock, badgeLines } from "./lib/badges.mjs";
+import { interview, lineAsker, repositoryIsPrivate } from "./lib/interview.mjs";
 import { render, truthy } from "./lib/render.mjs";
 
 export const PROVENANCE = ".project-foundation.json";
@@ -261,6 +263,8 @@ const USAGE = `Usage: my-skills <command> [options]   (or: node foundation.mjs <
               --interactive            ask even when no terminal is attached (answers on stdin)
   status    which skill version generated this repository, and have the templates changed since
   upgrade   what differs from the current templates; --apply writes the safe changes
+  badges    a row of README badges that can say something true; --apply writes it under the first title
+              --public | --private    the repository's visibility (else read from gh, else assumed private)
   list      the modules and files
   version   the skill's version
 
@@ -294,6 +298,8 @@ export async function main(argv, out = console.log, input = process.stdin) {
       "dry-run": { type: "boolean" },
       force: { type: "boolean" },
       apply: { type: "boolean" },
+      public: { type: "boolean" },
+      private: { type: "boolean" },
     },
     allowPositionals: true,
   });
@@ -357,6 +363,28 @@ export async function main(argv, out = console.log, input = process.stdin) {
       printList("recorded at init but deleted here", r.missing);
       if (!r.update.length && !r.new.length && !r.conflict.length) out("nothing to upgrade: the generated files match the templates");
       return r.conflict.length ? 1 : 0;
+    }
+    case "badges": {
+      const target = path.resolve(values.target ?? ".");
+      const { answers } = readProvenance(target);
+      const { root } = loadVariables(answers);
+      let visibility = values.public ? "public" : values.private ? "private" : undefined;
+      if (!visibility && typeof answers.private === "boolean") visibility = answers.private ? "private" : "public";
+      if (!visibility) {
+        const priv = repositoryIsPrivate(root.owner, root.repo);
+        if (priv !== undefined) visibility = priv ? "private" : "public";
+      }
+      if (!visibility) out("note: visibility unknown, assuming private (only the licence badge). Pass --public if the repository is public.");
+      if (values.apply) {
+        const result = applyBadges(target, root, { visibility });
+        if (result.missing) throw new UserError("README.md not found: nothing to put the badges in");
+        if (result.empty) out("no badge applies to this repository");
+        else out(result.changed ? "README.md updated" : "README.md already has these badges");
+        return 0;
+      }
+      const lines = badgeLines(root, { visibility, licenseFile: existsSync(path.join(target, "LICENSE")) });
+      out(lines.length ? badgeBlock(lines) : "no badge applies to this repository");
+      return 0;
     }
     case "status": {
       const s = status(path.resolve(values.target ?? "."));

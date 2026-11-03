@@ -128,6 +128,14 @@ the new template next to a conflicting file as `<file>.upstream` for you to merg
 file. A file that existed before the foundation was applied is the repository's own and is never touched. The skill itself is
 updated by whatever installed it (`npx skills update`, or a `git pull` of the clone it is linked from).
 
+### 9. Optional: README badges
+
+`node <skill>/scripts/foundation.mjs badges --target <repo>` prints a row of badges that can say something true, for the user to
+paste; `--apply` writes it between `<!-- badges:start -->` and `<!-- badges:end -->` under the README's first title (and
+replaces it on a later run), leaving the rest of the README alone. A public repository gets CI, CodeQL (if kept), the latest
+release (if release-please is on) and the licence; a private one only the licence, because the others cannot be drawn for people
+without access. Pass `--public` or `--private` when `gh` cannot tell. Offer it, never run it unasked.
+
 ## Monorepos
 
 A repository is a list of components, each with a name, a path and a stack. Shared rules, hooks, ADRs and one CI workflow live
