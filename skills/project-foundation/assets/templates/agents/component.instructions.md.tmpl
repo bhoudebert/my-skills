@@ -1,0 +1,10 @@
+---
+applyTo: "@@component_glob@@"
+---
+
+# @@component_name@@ (@@label@@)
+
+- Lives in `@@component_path@@/`. Run its commands from that folder; the gate is `@@quality_cmd@@`.
+- Commit scope: `@@component_name@@`. Repository-wide rules are in `AGENTS.md`.
+- Tests: `@@test_cmd@@`. Lint: `@@lint_cmd@@`. Format: `@@format_cmd@@`.
+- Keep its tests next to its code; never call a paid or external service for real.

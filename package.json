@@ -1,0 +1,17 @@
+{
+  "name": "my-skills",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "AI skills, installable with `npx skills add`",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "test": "node --test 'tests/**/*.test.mjs'"
+  },
+  "license": "MIT",
+  "bin": {
+    "my-skills": "skills/project-foundation/scripts/foundation.mjs"
+  }
+}
