@@ -11,6 +11,7 @@ GitHub owner and repo from `git remote -v`, the maintainer from `git config user
 | GitHub `owner` and `repo` | from `git remote` | Used in issue-template links. |
 | Components: name, path, stack | one component at the root | Stacks: `node`, `java-maven`, `java-gradle`, `rust`, `python`, `go`, `other`. Names are kebab-case: they become commit scopes and CI job names. |
 | Maintainer GitHub handle | the owner | CODEOWNERS and the code of conduct contact. |
+| Public or private repository, and CodeQL | public: CodeQL on; private: off | `codeql`. Code scanning is free on a public repository. On a **private** one it needs GitHub Code Security (paid, and not offered to every account type); without it the generated workflow fails its upload and every pull request has a red check. Ask, and if the repository is private ask whether they have Code Security. `gh repo view OWNER/REPO --json isPrivate` can answer the first part. |
 | Nix dev shell (`flake.nix`, `.envrc`) | no | `nix`. Yes when the user uses Nix: a shell with the toolchains of every component plus `git`, `gh`, `jq`; direnv loads it. Run `nix flake lock` once afterwards (needs the network) and commit `flake.lock`. |
 | Release automation (release-please) | yes | `release_please`. Needs a PAT secret to run CI on release PRs (see `github-settings.md`). |
 | Spec-driven (openspec + spec-drift reviewer) | no | Only for one component at the root, best with a TypeScript/JavaScript layout. See `spec-driven.md`. |

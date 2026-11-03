@@ -56,6 +56,16 @@ gh label create no-spec --description "No behaviour change: no spec update neede
 release pull requests are opened with the workflow's own token, which does not start other workflows, so the required checks
 never run on them and an administrator has to merge. Never paste a token into a chat or a file in the repository.
 
+## 0. What the plan allows
+
+Some features depend on the repository being public, or on the account's plan, and the skill cannot see either. Ask before
+turning them on, and say plainly when one is unavailable. As far as I know (check the current GitHub plans before promising
+anything): code scanning (CodeQL) is free on public repositories and needs GitHub Code Security on private ones, which is sold
+to organisations, not to personal accounts; branch protection and required status checks on a **private** repository need a paid
+plan (Pro for a personal account, Team for an organisation); secret scanning and push protection on a private repository need
+GitHub Secret Protection. Dependabot, Actions and release-please work on every plan. A private repository on a free personal
+plan therefore cannot enforce the required `Quality gate`: the checks still run and report, but nothing blocks a merge.
+
 ## 5. Security features
 
 Settings, Code security: enable Dependabot alerts and security updates, secret scanning and push protection. Code scanning: use

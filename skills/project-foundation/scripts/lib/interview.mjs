@@ -51,6 +51,22 @@ export function parseRemote(url) {
   return m ? { owner: m[1], repo: m[2] } : {};
 }
 
+/** Whether a GitHub repository is private, from `gh` when it is installed and logged in; undefined when it cannot say. */
+function repositoryIsPrivate(owner, repo) {
+  if (process.env.PROJECT_FOUNDATION_NO_GH) return undefined;
+  try {
+    const out = execFileSync("gh", ["repo", "view", `${owner}/${repo}`, "--json", "isPrivate", "-q", ".isPrivate"], {
+      encoding: "utf8",
+      timeout: 8000,
+      stdio: ["ignore", "pipe", "ignore"],
+      env: { ...process.env, GH_PROMPT_DISABLED: "1" },
+    }).trim();
+    return out === "true" ? true : out === "false" ? false : undefined;
+  } catch {
+    return undefined;
+  }
+}
+
 export function detect(target) {
   const info = { stacks: detectStacks(target), name: path.basename(target), description: "" };
   try {
@@ -59,6 +75,7 @@ export function detect(target) {
   } catch {
     /* no git, or no remote */
   }
+  if (info.owner && info.repo) info.isPrivate = repositoryIsPrivate(info.owner, info.repo);
   const pkg = path.join(target, "package.json");
   if (existsSync(pkg)) {
     try {
@@ -112,6 +129,14 @@ export async function interview(target, asker, { hasNix = false, out = (t) => co
   answers.owner = await ask("GitHub owner (user or organisation)?", seen.owner ?? "");
   answers.repo = await ask("GitHub repository name?", seen.repo ?? answers.project_slug);
   if (!answers.owner) throw new Error("A GitHub owner is needed (it is used in links and CODEOWNERS).");
+  // Code scanning is free on a public repository; on a private one it needs GitHub Code Security, a paid plan that not every
+  // account can buy. Generating the workflow where it cannot run gives a red check on every pull request.
+  let isPrivate = seen.isPrivate;
+  if (isPrivate === undefined) isPrivate = await yesNo("Is the repository private?", false);
+  else out(`GitHub says the repository is ${isPrivate ? "private" : "public"}.`);
+  answers.codeql = isPrivate
+    ? await yesNo("CodeQL code scanning on a private repository needs GitHub Code Security (paid). Do you have it?", false)
+    : await yesNo("Run CodeQL code scanning (free on a public repository)?", true);
   const maintainer = await ask("Maintainer's GitHub handle?", answers.owner);
   if (maintainer !== answers.owner) answers.maintainer_handle = maintainer.replace(/^@/, "");
 

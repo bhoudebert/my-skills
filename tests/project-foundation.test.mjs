@@ -510,7 +510,7 @@ describe("provenance, status and upgrade", () => {
     const config = fresh("cfg");
     writeFileSync(config, JSON.stringify({ ...BASE, profile: "go" }));
     const target = fresh("cli");
-    const run = (...args) => spawnSync(process.execPath, [script, ...args], { encoding: "utf8" });
+    const run = (...args) => spawnSync(process.execPath, [script, ...args], { encoding: "utf8", env: { ...process.env, PROJECT_FOUNDATION_NO_GH: "1" } });
     assert.match(run("version").stdout, /^\d+\.\d+\.\d+/);
     assert.match(run("list").stdout, /agent-instructions:/);
     const dry = run("init", "--config", config, "--target", target, "--dry-run");
@@ -528,6 +528,9 @@ describe("provenance, status and upgrade", () => {
 });
 
 describe("init without an answers file", () => {
+  before(() => {
+    process.env.PROJECT_FOUNDATION_NO_GH = "1"; // never call the GitHub API from a test
+  });
   const touch = (root, file, text = "") => {
     mkdirSync(path.dirname(path.join(root, file)), { recursive: true });
     writeFileSync(path.join(root, file), text);
@@ -619,6 +622,21 @@ describe("init without an answers file", () => {
     assert.ok(existsSync(path.join(target, "flake.nix")));
   });
 
+  test("asks whether the repository is private, and only keeps CodeQL where it can run", async () => {
+    process.env.PROJECT_FOUNDATION_NO_GH = "1";
+    const repo = fresh("q1");
+    touch(repo, "package.json");
+    const ask = async (answers) => interview(repo, scripted(answers), { out: () => {} });
+    assert.equal((await ask(["", "", "acme", ""])).codeql, true, "public by default: CodeQL on");
+    assert.equal((await ask(["", "", "acme", "", "y"])).codeql, false, "private, without Code Security: CodeQL off");
+    assert.equal((await ask(["", "", "acme", "", "y", "y"])).codeql, true, "private with Code Security: CodeQL on");
+    const asked = scripted(["", "", "acme", "", "y"]);
+    await interview(repo, asked, { out: () => {} });
+    assert.ok(asked.asked.some((q) => /private/.test(q)) && asked.asked.some((q) => /Code Security/.test(q)));
+    const off = render({ ...BASE, profile: "node", codeql: false }, "no-codeql");
+    assert.ok(!existsSync(path.join(off, ".github/workflows/codeql.yml")));
+  });
+
   test("names the components of a monorepo and asks for a missing stack", async () => {
     const mono = fresh("i2");
     touch(mono, "services/api/Cargo.toml");
@@ -629,9 +647,9 @@ describe("init without an answers file", () => {
 
     const empty = fresh("i3");
     mkdirSync(empty);
-    const asked = scripted(["", "", "acme", "", "", "python"]);
+    const asked = scripted(["", "", "acme", "", "", "", "", "python"]);
     assert.equal((await interview(empty, asked, { out: () => {} })).profile, "python");
-    await assert.rejects(interview(empty, scripted(["", "", "acme", "", "", "cobol"]), { out: () => {} }), /Unknown stack/);
+    await assert.rejects(interview(empty, scripted(["", "", "acme", "", "", "", "", "cobol"]), { out: () => {} }), /Unknown stack/);
     await assert.rejects(interview(empty, scripted([]), { out: () => {} }), /GitHub owner is needed/);
   });
 
@@ -642,13 +660,13 @@ describe("init without an answers file", () => {
     git(repo, "init", "-q");
     git(repo, "remote", "add", "origin", "https://github.com/acme/shop.git");
     const answers = "\n".repeat(12); // the default to every question
-    const first = spawnSync(process.execPath, [script, "init", "--interactive", "--yes"], { cwd: repo, input: answers, encoding: "utf8" });
+    const first = spawnSync(process.execPath, [script, "init", "--interactive", "--yes"], { cwd: repo, input: answers, encoding: "utf8", env: { ...process.env, PROJECT_FOUNDATION_NO_GH: "1" } });
     assert.equal(first.status, 0, first.stderr);
     assert.match(first.stdout, /Found: go in the repository root/);
     assert.match(first.stdout, /file\(s\) created/);
     assert.ok(existsSync(path.join(repo, "AGENTS.md")));
     assert.equal(JSON.parse(read(repo, PROVENANCE)).answers.profile, "go");
-    const again = spawnSync(process.execPath, [script, "init", "--interactive", "--yes"], { cwd: repo, input: answers, encoding: "utf8" });
+    const again = spawnSync(process.execPath, [script, "init", "--interactive", "--yes"], { cwd: repo, input: answers, encoding: "utf8", env: { ...process.env, PROJECT_FOUNDATION_NO_GH: "1" } });
     assert.equal(again.status, 2);
     assert.match(again.stderr, /already set up/);
     const status = spawnSync(process.execPath, [script, "status"], { cwd: repo, encoding: "utf8" });

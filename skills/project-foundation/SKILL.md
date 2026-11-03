@@ -46,8 +46,9 @@ templates; keep the project's own wording where it already says the same thing).
 ### 2. Interview, briefly, and wait for the answer
 
 **Stop and ask before generating anything.** What you detected (stacks, GitHub owner and repo, the name) are facts you can state.
-The choices are the user's: the Nix dev shell, release automation, spec-driven, the attribution rule, the maintainer, and any
-command that does not fit what you saw (the quality gate above all). A default is a proposal, not a decision, so never apply
+The choices are the user's: whether the repository is public or private and so whether CodeQL runs (private needs the paid
+GitHub Code Security, see `references/interview.md`), the Nix dev shell, release automation, spec-driven, the attribution rule,
+the maintainer, and any command that does not fit what you saw (the quality gate above all). A default is a proposal, not a decision, so never apply
 one silently.
 
 Send **one message** with: what you found, then a numbered list of every choice with the default you suggest, and end with
