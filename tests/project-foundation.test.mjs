@@ -323,6 +323,7 @@ describe("a monorepo", () => {
     assert.ok(dependabot.includes("package-ecosystem: github-actions"));
     const codeql = read(root, ".github/workflows/codeql.yml");
     for (const language of ["rust", "python", "javascript-typescript"]) assert.ok(codeql.includes(`- language: ${language}`));
+    assert.match(codeql, /permissions:\n(?:  #.*\n)?  actions: read\n  contents: read\n  security-events: write\n/, "CodeQL needs actions: read on a private repository");
     const release = JSON.parse(read(root, "release-please-config.json"));
     assert.equal(release["include-component-in-tag"], true);
     assert.deepEqual(Object.fromEntries(Object.entries(release.packages).map(([k, v]) => [k, v["release-type"]])), { "services/api": "rust", "services/worker": "python", web: "node" });
