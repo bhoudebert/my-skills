@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{TITLE}} · {{NAME}} documentation</title>
+  <meta name="description" content="{{TITLE}}: documentation of {{NAME}}, one rules file that every coding agent follows.">
+  <meta property="og:title" content="{{TITLE}} · {{NAME}}">
+  <meta property="og:image" content="{{SITE}}images/social-preview.png">
+  <link rel="canonical" href="{{URL}}">
+  <link rel="icon" href="{{ROOT}}/images/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=STIX+Two+Text:ital,wght@0,400;0,600;1,400&amp;display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ROOT}}/docs.css">
+</head>
+<body data-root="{{ROOT}}">
+<header class="top">
+  <a class="brand" href="{{ROOT}}/index.html"><img src="{{ROOT}}/images/logo.svg" width="28" height="28" alt=""><span>{{NAME}}</span></a>
+  <div class="search">
+    <label class="sr" for="q">Search the documentation</label>
+    <input id="q" type="search" placeholder="Search the documentation" autocomplete="off" aria-controls="results">
+    <ul id="results" role="listbox" hidden></ul>
+  </div>
+  <nav class="top-links" aria-label="Site">
+    <a href="{{ROOT}}/docs/index.html">Docs</a>
+    <a href="{{REPO_URL}}">GitHub</a>
+  </nav>
+  <button class="menu" type="button" aria-expanded="false" aria-controls="sidebar">Menu</button>
+</header>
+
+<div class="shell">
+  <aside class="sidebar" id="sidebar" aria-label="Documentation">
+{{SIDEBAR}}
+  </aside>
+
+  <main class="article" id="content">
+    <h1>{{TITLE}}</h1>
+{{CONTENT}}
+    <footer class="pager">
+      {{PREV}}
+      {{NEXT}}
+    </footer>
+    <p class="edit"><a href="{{EDIT_URL}}">Edit this page on GitHub</a></p>
+  </main>
+
+  <aside class="aside">
+{{TOC}}
+  </aside>
+</div>
+
+<script src="{{ROOT}}/doc.js" defer></script>
+</body>
+</html>

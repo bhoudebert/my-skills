@@ -16,3 +16,5 @@ coverage
 *.log
 .agents/
 .claude/skills/
+site/docs/
+site/images/

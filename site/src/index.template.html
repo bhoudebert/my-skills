@@ -6,6 +6,11 @@
   <title>{{NAME}}: one rules file that every coding agent follows</title>
   <meta name="description" content="Bootstrap a repository with one AGENTS.md that Claude, Codex, Gemini and Copilot all follow, git hooks that bind every agent, CI with a single required check and releases. One project or a monorepo of several stacks.">
   <meta name="theme-color" content="#0b0c0e">
+  <meta property="og:title" content="{{NAME}}: one rules file that every coding agent follows">
+  <meta property="og:description" content="One AGENTS.md for Claude, Codex, Gemini and Copilot, with hooks and CI that hold them to it.">
+  <meta property="og:image" content="{{SITE}}images/social-preview.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" href="images/favicon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=STIX+Two+Text:ital,wght@0,400;0,600;1,400&amp;display=swap" rel="stylesheet">
@@ -15,8 +20,8 @@
 
 <header class="wall" id="top">
   <div class="bar">
-    <a class="wordmark" href="#top">{{NAME}}</a>
-    <a href="{{REPO_URL}}">GitHub</a>
+    <a class="wordmark" href="#top"><img src="images/logo-dark.svg" width="26" height="26" alt="">{{NAME}}</a>
+    <span class="bar-links"><a href="docs/index.html">Docs</a><a href="{{REPO_URL}}">GitHub</a></span>
   </div>
   <h1 class="statement"><span>One rules file.</span> <span>Every agent follows it.</span></h1>
   <div class="doors">
@@ -46,6 +51,7 @@
       <p>Run it from the repository. It detects the stacks and your GitHub remote, asks the rest, and shows what it would write. Nothing needs installing, and it needs Node 22 or later.</p>
       <div class="code" data-ui><code>npx github:bhoudebert/my-skills init --dry-run</code></div>
     </div>
+    <p class="halves-note">New to this? <a href="docs/start-here.html">Start here</a> explains it in plain words, with no jargon.</p>
   </section>
 
   <div class="field">
@@ -107,9 +113,9 @@
   <div class="strip">
     <p>Rules for every coding agent.</p>
     <nav aria-label="Project">
-      <a href="{{REPO_URL}}#readme">README</a>
-      <a href="{{REPO_URL}}/tree/main/docs">Documentation</a>
-      <a href="{{REPO_URL}}/blob/main/skills/project-foundation/SKILL.md">The skill</a>
+      <a href="docs/start-here.html">Start here</a>
+      <a href="docs/index.html">Documentation</a>
+      <a href="{{REPO_URL}}">GitHub</a>
       <a href="{{REPO_URL}}/issues">Issues</a>
     </nav>
     <p class="strip-right">Version {{VERSION}} · MIT</p>

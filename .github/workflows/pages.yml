@@ -8,7 +8,11 @@ on:
     paths:
       - "site/**"
       - "skills/**"
+      - "docs/**"
+      - "*.md"
       - "scripts/build-site.mjs"
+      - "scripts/build-docs-site.mjs"
+      - "scripts/docs.mjs"
       - ".github/workflows/pages.yml"
   workflow_dispatch:
 
@@ -29,13 +33,15 @@ jobs:
       - uses: actions/setup-node@v7
         with:
           node-version: "24"
-      - name: Build the site from the real tool
+          cache: npm
+      - run: npm ci --ignore-scripts
+      - name: Build the site and the documentation from the real tool
         run: node scripts/build-site.mjs
       - name: Collect what is published
         run: |
           mkdir _site
-          cp site/index.html site/styles.css site/app.js site/data.json _site/
-          cp -r site/assets _site/assets
+          cp -r site/. _site/
+          rm -rf _site/src
           touch _site/.nojekyll
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v4
