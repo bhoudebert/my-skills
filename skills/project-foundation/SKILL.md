@@ -35,6 +35,14 @@ and direnv) when the user uses Nix: it is off by default.
 
 ## Workflow
 
+### 0. Start on a branch
+
+Before this skill writes anything (`init`, `upgrade --apply`, `badges --apply`, or a hand edit of a generated file), run
+`git branch --show-current` in the target repository. On the default branch, create a branch first (`chore/…`, `docs/…`),
+without asking, and say which; on another branch, ask once whether it is the right place. Then work, and when done push the
+branch and open a pull request unless the user asked to stop earlier. Never commit to the default branch. A brand-new
+repository with no commit yet is the one exception: the first commit may go on the default branch.
+
 ### 1. Look before asking
 
 Read the target folder: is it empty, or an existing repository? `ls`, `git log --oneline | head`, manifests

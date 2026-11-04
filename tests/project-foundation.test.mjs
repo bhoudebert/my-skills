@@ -270,6 +270,71 @@ describe("the commit check", () => {
   });
 });
 
+describe("starting and delivering a change", () => {
+  const fresh2 = (config, label) => {
+    const target = fresh(label);
+    init({ config: { ...BASE, profile: "node", quality_cmd: "true", ...config }, target });
+    return target;
+  };
+
+  test("the rules tell an agent to check the branch before the first edit, and how to deliver", () => {
+    const agents = read(outputs.get("node"), "AGENTS.md");
+    assert.match(agents, /## Starting and delivering a change/);
+    assert.match(agents, /Before the first edit of any task, \*\*including running a tool that writes files\*\*/);
+    assert.match(agents, /git branch --show-current/);
+    assert.match(agents, /On `main`\*\*: do not edit there\./);
+    assert.match(agents, /Do not ask first/);
+    assert.match(agents, /\*\*On another branch\*\*: ask once/);
+    assert.match(agents, /gh pr create/);
+    assert.match(agents, /pushing to\n  `main`, force-pushing/, "pushing a branch is not something to ask about");
+    assert.match(read(outputs.get("node"), ".github/copilot-instructions.md"), /Before the first edit run `git branch --show-current`/);
+    const local = read(render({ ...BASE, profile: "node", agent_opens_prs: false }, "local"), "AGENTS.md");
+    assert.doesNotMatch(local, /gh pr create/);
+    assert.match(local, /Push and open\nthe pull request only when asked/);
+    for (const key of ["monorepo", ...PROFILES]) assert.match(read(outputs.get(key), "AGENTS.md"), /Starting and delivering a change/);
+  });
+
+  test("git refuses a commit on the default branch, except the first one, a branch, or an explicit exception", () => {
+    const repo = fresh2({}, "guard");
+    git(repo, "init", "-q", "-b", "main");
+    git(repo, "config", "core.hooksPath", ".githooks");
+    writeFileSync(path.join(repo, "a.txt"), "1\n");
+    git(repo, "add", "-A");
+    assert.equal(git(repo, "commit", "-q", "-m", "chore: start").status, 0, "the first commit of a repository is allowed");
+    writeFileSync(path.join(repo, "a.txt"), "2\n");
+    git(repo, "add", "-A");
+    const refused = git(repo, "commit", "-q", "-m", "fix: change");
+    assert.notEqual(refused.status, 0);
+    assert.match(refused.stderr, /you are on main\. Create a branch first/);
+    git(repo, "switch", "-q", "-c", "fix/change");
+    assert.equal(git(repo, "commit", "-q", "-m", "fix: change").status, 0, "a branch is fine");
+    git(repo, "switch", "-q", "main");
+    writeFileSync(path.join(repo, "a.txt"), "3\n");
+    git(repo, "add", "-A");
+    const excepted = spawnSync("git", ["-C", repo, "-c", "user.name=t", "-c", "user.email=t@t", "commit", "-q", "-m", "chore: exception"], { encoding: "utf8", env: { ...process.env, ALLOW_DEFAULT_BRANCH: "1" } });
+    assert.equal(excepted.status, 0, "an explicit one-off exception");
+    git(repo, "switch", "-q", "--detach", "HEAD");
+    writeFileSync(path.join(repo, "a.txt"), "4\n");
+    git(repo, "add", "-A");
+    assert.equal(git(repo, "commit", "-q", "-m", "chore: detached").status, 0, "a rebase works on a detached head");
+    assert.notEqual(git(repo, "commit", "-q", "--allow-empty", "-m", "bad message").status, 0, "the message is still checked");
+  });
+
+  test("git refuses a push to the default branch, and SKIP_PRE_PUSH does not lift that", () => {
+    const repo = fresh2({}, "pushguard");
+    git(repo, "init", "-q");
+    const hook = path.join(repo, ".githooks/pre-push");
+    const push = (ref, env = {}) => spawnSync("sh", [hook], { cwd: repo, input: `refs/heads/x abc ${ref} def\n`, encoding: "utf8", env: { ...process.env, ...env } });
+    const refused = push("refs/heads/main");
+    assert.notEqual(refused.status, 0);
+    assert.match(refused.stderr, /refusing to push to main\. Push a branch and open a pull request/);
+    assert.notEqual(push("refs/heads/main", { SKIP_PRE_PUSH: "1" }).status, 0, "skipping the gate is not skipping the rule");
+    assert.equal(push("refs/heads/feat/x").status, 0, "a branch passes, with the (true) gate");
+    assert.equal(push("refs/heads/main", { ALLOW_DEFAULT_BRANCH: "1" }).status, 0, "an explicit exception");
+    assert.equal(push("refs/heads/feat/x", { SKIP_PRE_PUSH: "1" }).status, 0);
+  });
+});
+
 describe("a monorepo", () => {
   let root;
   before(() => {
@@ -553,6 +618,33 @@ describe("provenance, status and upgrade", () => {
     const second = init({ config: withNix, target, force: true });
     assert.equal(read(target, ".gitignore").split("\n").filter((l) => l === ".direnv/").length, 1);
     assert.ok(second.merged.length === 0 || !second.merged.includes(".gitignore"));
+  });
+
+  test("the date is frozen at init: a later upgrade does not see the decision records as changed", () => {
+    const target = fresh("dated");
+    init({ config: { ...BASE, profile: "node" }, target });
+    const p = provenance(target);
+    assert.match(p.answers.today, /^\d{4}-\d{2}-\d{2}$/);
+    assert.equal(p.answers.year, p.answers.today.slice(0, 4));
+    assert.match(read(target, "docs/adr/0001-record-architecture-decisions.md"), new RegExp(`Date: ${p.answers.today}`));
+    // Another day: the recorded date is what is rendered, whatever today is.
+    p.answers.today = "2020-02-02";
+    p.answers.year = "2020";
+    for (const adr of readdirSync(path.join(target, "docs/adr")).filter((f) => /^000\d/.test(f))) {
+      const file = path.join(target, "docs/adr", adr);
+      const text = readFileSync(file, "utf8").replace(/Date: \S+/, "Date: 2020-02-02");
+      writeFileSync(file, text);
+      p.files[`docs/adr/${adr}`] = sha(text);
+    }
+    save(target, p);
+    const r = upgrade({ target });
+    assert.deepEqual(r.update.filter((f) => f.startsWith("docs/adr/")), [], "the records are not rewritten");
+    // A repository generated before the date was recorded falls back to the day it was generated.
+    delete p.answers.today;
+    delete p.answers.year;
+    p.generatedAt = "2020-02-02T10:00:00.000Z";
+    save(target, p);
+    assert.deepEqual(upgrade({ target }).update.filter((f) => f.startsWith("docs/adr/")), []);
   });
 
   test("a repository not generated by the skill is refused with a clear message", () => {

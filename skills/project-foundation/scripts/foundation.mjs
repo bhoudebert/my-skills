@@ -189,7 +189,9 @@ export function init({ config, target, modules, dryRun = false, force = false })
       templatesHash: templatesHash(),
       generatedAt: new Date().toISOString(),
       modules: modules ?? null,
-      answers: config,
+      // The date is part of what was generated (the decision records carry it): freeze it, or every later `upgrade` would
+      // see the records as changed.
+      answers: { today: root.today, year: root.year, ...config },
       files: written,
     };
     mkdirSync(target, { recursive: true });
@@ -213,7 +215,9 @@ const readProvenance = (target) => {
  */
 export function upgrade({ target, apply = false, config }) {
   const provenance = readProvenance(target);
-  const answers = config ?? provenance.answers;
+  // A repository generated before the date was recorded: the day it was generated is the date its records carry.
+  const generatedOn = provenance.generatedAt ? { today: provenance.generatedAt.slice(0, 10), year: provenance.generatedAt.slice(0, 4) } : {};
+  const answers = { ...generatedOn, ...(config ?? provenance.answers) };
   const { files } = plan(answers, provenance.modules ? new Set(provenance.modules) : null);
   const result = { unchanged: [], update: [], conflict: [], edited: [], new: [], missing: [], applied: [], merged: [], notes: [] };
   const recordedNow = { ...provenance.files };
