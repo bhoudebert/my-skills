@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 480" width="960" height="480" role="img" aria-labelledby="t d">
+<title id="t">One trail for every agent</title>
+<desc id="d">Claude Code, Codex, Gemini CLI and GitHub Copilot each read their own file, and every file leads to AGENTS.md.</desc>
+<rect width="960" height="480" fill="#eef0f3"/>
+<rect x="40" y="56" width="360" height="64" fill="#fff"/>
+<circle cx="62" cy="88" r="7" fill="#0b0c0e"/>
+<text x="82" y="83" font-family="Georgia, 'Times New Roman', serif" font-size="21" font-weight="600" fill="#0b0c0e" text-anchor="start">Claude Code</text>
+<text x="82" y="106" font-family="Georgia, 'Times New Roman', serif" font-size="15" font-weight="400" fill="#5d6470" text-anchor="start">reads CLAUDE.md  ·  @AGENTS.md</text>
+<path d="M400 88 C 480 88, 510 220, 590 220" fill="none" stroke="#1f2de6" stroke-width="3" stroke-dasharray="2 9" stroke-linecap="round"/>
+<rect x="40" y="138" width="360" height="64" fill="#fff"/>
+<circle cx="62" cy="170" r="7" fill="#0b0c0e"/>
+<text x="82" y="165" font-family="Georgia, 'Times New Roman', serif" font-size="21" font-weight="600" fill="#0b0c0e" text-anchor="start">Codex</text>
+<text x="82" y="188" font-family="Georgia, 'Times New Roman', serif" font-size="15" font-weight="400" fill="#5d6470" text-anchor="start">reads AGENTS.md  ·  the file itself</text>
+<path d="M400 170 C 480 170, 510 220, 590 220" fill="none" stroke="#1f2de6" stroke-width="3" stroke-dasharray="2 9" stroke-linecap="round"/>
+<rect x="40" y="220" width="360" height="64" fill="#fff"/>
+<circle cx="62" cy="252" r="7" fill="#0b0c0e"/>
+<text x="82" y="247" font-family="Georgia, 'Times New Roman', serif" font-size="21" font-weight="600" fill="#0b0c0e" text-anchor="start">Gemini CLI</text>
+<text x="82" y="270" font-family="Georgia, 'Times New Roman', serif" font-size="15" font-weight="400" fill="#5d6470" text-anchor="start">reads GEMINI.md  ·  @./AGENTS.md</text>
+<path d="M400 252 C 480 252, 510 220, 590 220" fill="none" stroke="#1f2de6" stroke-width="3" stroke-dasharray="2 9" stroke-linecap="round"/>
+<rect x="40" y="302" width="360" height="64" fill="#fff"/>
+<circle cx="62" cy="334" r="7" fill="#0b0c0e"/>
+<text x="82" y="329" font-family="Georgia, 'Times New Roman', serif" font-size="21" font-weight="600" fill="#0b0c0e" text-anchor="start">GitHub Copilot</text>
+<text x="82" y="352" font-family="Georgia, 'Times New Roman', serif" font-size="15" font-weight="400" fill="#5d6470" text-anchor="start">reads copilot-instructions.md  ·  and AGENTS.md</text>
+<path d="M400 334 C 480 334, 510 220, 590 220" fill="none" stroke="#1f2de6" stroke-width="3" stroke-dasharray="2 9" stroke-linecap="round"/>
+<path d="M590 92h200l60 60v148H590z" fill="#1f2de6"/><path d="M790 92v60h60z" fill="#8f97ff"/>
+<text x="614" y="206" font-family="Georgia, 'Times New Roman', serif" font-size="32" font-weight="600" fill="#fff" text-anchor="start">AGENTS.md</text>
+<text x="614" y="238" font-family="Georgia, 'Times New Roman', serif" font-size="19" font-weight="400" fill="#dfe2ff" text-anchor="start">the rules, written once</text>
+<text x="614" y="266" font-family="Georgia, 'Times New Roman', serif" font-size="15" font-weight="400" fill="#dfe2ff" text-anchor="start">commands, conventions, workflow</text>
+<text x="40" y="420" font-family="Georgia, 'Times New Roman', serif" font-size="17" font-weight="400" fill="#0b0c0e" text-anchor="start">Git hooks and CI hold every agent to it: Conventional Commits, no commit on main, one required check.</text>
+<text x="40" y="448" font-family="Georgia, 'Times New Roman', serif" font-size="15" font-weight="400" fill="#5d6470" text-anchor="start">Four copies of the rules would drift apart. One file, with one-line adapters, cannot.</text>
+</svg>

@@ -88,3 +88,10 @@ branch (`git switch -c chore/…`) or use `ALLOW_DEFAULT_BRANCH=1 git commit …
 
 Open an [issue](https://github.com/bhoudebert/my-skills/issues) with the output of `project-foundation status`, your answers
 (from `.project-foundation.json`, without anything private) and what you ran.
+
+<!-- docs-nav:start -->
+---
+**Documentation:** [Start here](./start-here.md) · [Guides](./guides/new-project.md) · [Concepts](./concepts.md) · [Reference](./cli.md) · [Glossary](./glossary.md) · [All pages](./README.md)
+
+← [Glossary](./glossary.md) · [Stacks: what the project must provide, and how to add one](../skills/project-foundation/references/stacks.md) →
+<!-- docs-nav:end -->

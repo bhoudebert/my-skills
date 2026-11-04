@@ -36,3 +36,10 @@ thin file that points to `AGENTS.md` (an import if the tool has one, one sentenc
   https://google-gemini.github.io/gemini-cli/docs/cli/gemini-md.html
 - Codex, AGENTS.md: https://developers.openai.com/codex/guides/agents-md
 - Claude Code memory and imports: https://docs.anthropic.com/en/docs/claude-code/memory (not re-fetched on 2026-11-03: the nested-file behaviour is from earlier reading of the Claude Code docs; re-check it)
+
+<!-- docs-nav:start -->
+---
+**Documentation:** [Start here](../../../docs/start-here.md) · [Guides](../../../docs/guides/new-project.md) · [Concepts](../../../docs/concepts.md) · [Reference](../../../docs/cli.md) · [Glossary](../../../docs/glossary.md) · [All pages](../../../docs/README.md)
+
+← [What only the owner can do on GitHub](./github-settings.md) · [Monorepos with several stacks](./monorepo.md) →
+<!-- docs-nav:end -->

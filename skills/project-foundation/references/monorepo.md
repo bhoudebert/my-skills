@@ -48,3 +48,10 @@ package by the paths it touches, and the scope tells a reader which. A change th
   that run because both folders changed. A contract test between components is the project's to write.
 - A component at the root cannot sit beside others; give it a folder.
 - Component names are commit scopes and job ids: kebab-case, unique.
+
+<!-- docs-nav:start -->
+---
+**Documentation:** [Start here](../../../docs/start-here.md) · [Guides](../../../docs/guides/new-project.md) · [Concepts](../../../docs/concepts.md) · [Reference](../../../docs/cli.md) · [Glossary](../../../docs/glossary.md) · [All pages](../../../docs/README.md)
+
+← [What each agent reads](./agent-instructions.md) · [The interview and the answers file](./interview.md) →
+<!-- docs-nav:end -->

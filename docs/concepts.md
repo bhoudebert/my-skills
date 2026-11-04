@@ -91,3 +91,10 @@ component names. [`references/monorepo.md`](../skills/project-foundation/referen
 - It never changes git state: it only reads `git ls-files`, to warn about files git tracks although `.gitignore` ignores them.
 - It never uses the network, and no model takes part in generating files.
 - It never changes GitHub settings. It lists the commands, and you run them.
+
+<!-- docs-nav:start -->
+---
+**Documentation:** [Start here](./start-here.md) · [Guides](./guides/new-project.md) · [Concepts](./concepts.md) · [Reference](./cli.md) · [Glossary](./glossary.md) · [All pages](./README.md)
+
+← [Protect main on GitHub](./guides/github-setup.md) · [Command reference](./cli.md) →
+<!-- docs-nav:end -->

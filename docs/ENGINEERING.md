@@ -76,6 +76,22 @@ the hooks and `quality.sh` in real git repositories.
 the file tree and counts behind each switch (computed for all 32 combinations), a refused commit, a refused message and a refused push. It fails when
 two numbers on the page disagree. `.github/workflows/pages.yml` builds and publishes it.
 
+## The documentation
+
+The Markdown is the source, and it is one connected guide:
+
+- `docs/nav.json` lists the pages in reading order. `node scripts/docs.mjs write` writes, at the end of each listed page, a generated block
+  (documentation links, previous and next), and builds `docs/generated-files.md` from the manifest and `assets/descriptions.json`, so a file
+  the tool writes cannot go undocumented.
+- `node scripts/docs.mjs check` (part of `npm test`) fails when those are out of date, or when a link, an anchor or an image in any
+  Markdown file does not resolve.
+- `scripts/build-docs-site.mjs` renders the same pages on the site (sidebar, "on this page", search, previous and next) with `marked`,
+  the one dev dependency, used only by the site build.
+- `scripts/build-images.mjs` renders the real output of the tool to PNG for the docs (needs Chromium; the PNGs are committed). The three
+  diagrams and the logo are hand-written SVG in `docs/images/`.
+
+After editing a page, run `npm run docs`.
+
 ## Changing something
 
 1. Edit the template, and `profiles.json` or `manifest.json` if the set of files or commands changes.
@@ -88,3 +104,10 @@ two numbers on the page disagree. `.github/workflows/pages.yml` builds and publi
 - [0001](adr/0001-record-architecture-decisions.md) Record architecture decisions
 - [0002](adr/0002-conventional-commits-and-automated-releases.md) Conventional Commits and automated releases
 - [0003](adr/0003-one-agent-instruction-file.md) One agent instruction file for every agent
+
+<!-- docs-nav:start -->
+---
+**Documentation:** [Start here](./start-here.md) · [Guides](./guides/new-project.md) · [Concepts](./concepts.md) · [Reference](./cli.md) · [Glossary](./glossary.md) · [All pages](./README.md)
+
+← [The optional spec-driven module](../skills/project-foundation/references/spec-driven.md) · [How this project evolves](./EVOLVING.md) →
+<!-- docs-nav:end -->

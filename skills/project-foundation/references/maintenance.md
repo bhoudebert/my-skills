@@ -1,4 +1,4 @@
-# Evolving this skill
+# Working on the skill
 
 ## Layout
 
@@ -43,3 +43,10 @@ lists the components, add the block there, not as a loop in a template.
 The workflow, the commit rules, the ADR practice, the spec-drift reviewer and the agent working agreements were distilled from
 the agentRide project (`bhoudebert/agent-motoride`): `AGENTS.md`, `CONTRIBUTING.md`, `docs/EVOLVING.md`, `docs/adr/`,
 `.github/workflows/`. When that project learns something, update the matching template here and its test.
+
+<!-- docs-nav:start -->
+---
+**Documentation:** [Start here](../../../docs/start-here.md) · [Guides](../../../docs/guides/new-project.md) · [Concepts](../../../docs/concepts.md) · [Reference](../../../docs/cli.md) · [Glossary](../../../docs/glossary.md) · [All pages](../../../docs/README.md)
+
+← [Code of Conduct](../../../CODE_OF_CONDUCT.md)
+<!-- docs-nav:end -->

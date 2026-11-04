@@ -85,6 +85,7 @@ then the edit is already done. The check above comes first.
 - The skill lives in `skills/project-foundation/`: `scripts/` is the engine, `assets/` the templates, profiles and manifest,
   `references/` what an agent reads when it needs detail. The site is `site/`, built by `scripts/build-site.mjs`.
 - A template and its test change together; bump `skills/project-foundation/VERSION` when either the engine or a template changes.
+- After editing a Markdown page, run `npm run docs`: the navigation blocks and `docs/generated-files.md` are generated, and a broken link fails the tests.
 - An unknown template variable is an error, never an empty string; an existing file is never overwritten.
 - The generated files must say the same thing everywhere: change a rule in `AGENTS.md`, `CONTRIBUTING.md`, the Copilot digest and the
   hook that enforces it in the same commit.

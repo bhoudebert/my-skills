@@ -22,3 +22,10 @@ directly. Please do not open a public issue for a vulnerability. Expect an answe
 ## Supported versions
 
 The latest release receives fixes.
+
+<!-- docs-nav:start -->
+---
+**Documentation:** [Start here](./docs/start-here.md) · [Guides](./docs/guides/new-project.md) · [Concepts](./docs/concepts.md) · [Reference](./docs/cli.md) · [Glossary](./docs/glossary.md) · [All pages](./docs/README.md)
+
+← [Changelog](./CHANGELOG.md) · [Support](./SUPPORT.md) →
+<!-- docs-nav:end -->

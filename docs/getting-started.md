@@ -100,3 +100,10 @@ Some of this depends on your plan: on a private repository, branch protection ne
 
 [Concepts](concepts.md) explains why the files are shaped this way. [Troubleshooting](troubleshooting.md) covers the first things
 that go wrong.
+
+<!-- docs-nav:start -->
+---
+**Documentation:** [Start here](./start-here.md) · [Guides](./guides/new-project.md) · [Concepts](./concepts.md) · [Reference](./cli.md) · [Glossary](./glossary.md) · [All pages](./README.md)
+
+← [Start here](./start-here.md) · [Start a new project](./guides/new-project.md) →
+<!-- docs-nav:end -->
