@@ -1,11 +1,11 @@
 #!/usr/bin/env node
 // project-foundation: renders the templates into a repository, and later says what changed in them.
 //
-//   my-skills init                          look at the repository, ask what cannot be seen, generate
-//   my-skills init --config answers.json    the same, from an answers file (what an agent does)
-//   my-skills status | upgrade [--apply]    what changed in the templates since the repository was generated
-//   my-skills badges [--apply]              a row of badges for the README (printed, or written between markers)
-//   my-skills list | version
+//   project-foundation init                          look at the repository, ask what cannot be seen, generate
+//   project-foundation init --config answers.json    the same, from an answers file (what an agent does)
+//   project-foundation status | upgrade [--apply]    what changed in the templates since the repository was generated
+//   project-foundation badges [--apply]              a row of badges for the README (printed, or written between markers)
+//   project-foundation list | version
 // Every command takes --target <folder> (default: the current folder); init also --modules a,b, --dry-run, --force, --yes.
 //
 // Node standard library only. Never changes git state (it only reads `git ls-files`, to warn about files that are tracked
@@ -309,7 +309,7 @@ export function status(target) {
 
 // ------------------------------------------------------------------------------------------------ cli
 
-const USAGE = `Usage: my-skills <command> [options]   (or: node foundation.mjs <command>)
+const USAGE = `Usage: project-foundation <command> [options]   (or: node foundation.mjs <command>)
 
   init      look at the repository, ask what cannot be seen, generate the files
               --config <answers.json>  skip the questions and use these answers

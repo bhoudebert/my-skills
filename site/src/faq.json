@@ -1,0 +1,34 @@
+[
+  {
+    "q": "Does it overwrite my files?",
+    "a": "No. A file that exists is skipped and listed, and <code>.gitignore</code> only gains the lines it lacks. <code>upgrade</code> never touches a file you edited: the new template lands beside it as <code>&lt;file&gt;.upstream</code>."
+  },
+  {
+    "q": "Which agents does it support?",
+    "a": "Codex and Copilot read <code>AGENTS.md</code>. Claude Code and Gemini CLI import it with one line. Copilot code review gets a short digest. Any other agent can point at <code>AGENTS.md</code> the same way."
+  },
+  {
+    "q": "Do contributors need the skill?",
+    "a": "No. The rules, hooks and CI are plain files in the repository. Only <code>status</code>, <code>upgrade</code> and <code>badges</code> need the skill, and it can be committed with the repository."
+  },
+  {
+    "q": "Is a model involved?",
+    "a": "Not in generating. The command is a Node script with no dependencies and no network. An agent can run the interview for you, or you can run it yourself."
+  },
+  {
+    "q": "Which stacks?",
+    "a": "Node and TypeScript, Java with Maven or Gradle, Rust, Python and Go, plus an “other” profile. A monorepo can mix them: each component gets its own job, and one required check waits for all of them."
+  },
+  {
+    "q": "What does it do on GitHub?",
+    "a": "It writes files only. Branch protection, merge settings, labels and secrets are yours to change, so it lists the commands instead. On a private repository CodeQL needs the paid GitHub Code Security, so it asks first."
+  },
+  {
+    "q": "How do updates work?",
+    "a": "<code>npx skills update</code> updates the skill. <code>upgrade</code> then compares what it generated, hash by hash, with the new templates, and writes only the files you have not edited."
+  },
+  {
+    "q": "What stops an agent working on main?",
+    "a": "The rules tell it to check the branch before its first edit and to branch without asking. Git refuses a commit on <code>main</code> and a push to it. GitHub branch protection, which you enable, is the final rule."
+  }
+]

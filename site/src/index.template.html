@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{NAME}}: one rules file that every coding agent follows</title>
+  <meta name="description" content="Bootstrap a repository with one AGENTS.md that Claude, Codex, Gemini and Copilot all follow, git hooks that bind every agent, CI with a single required check and releases. One project or a monorepo of several stacks.">
+  <meta name="theme-color" content="#0b0c0e">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=STIX+Two+Text:ital,wght@0,400;0,600;1,400&amp;display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header class="wall" id="top">
+  <div class="bar">
+    <a class="wordmark" href="#top">{{NAME}}</a>
+    <a href="{{REPO_URL}}">GitHub</a>
+  </div>
+  <h1 class="statement"><span>One rules file.</span> <span>Every agent follows it.</span></h1>
+  <div class="doors">
+    <a class="door" href="#with-an-agent">
+      <img src="assets/portrait-of-an-ant-profile-view.jpg" width="280" height="373" alt="Macro photograph of an ant seen in profile against a yellow-green background" loading="eager">
+      <span class="door-name">With an agent</span>
+      <span class="door-line">Ask it to bootstrap the repository.</span>
+    </a>
+    <a class="door" href="#from-the-command-line">
+      <img src="assets/portrait-of-an-ant-full-face-view.jpg" width="280" height="373" alt="Macro photograph of an ant seen from the front against a yellow-green background" loading="eager">
+      <span class="door-name">From the command line</span>
+      <span class="door-line">Run project-foundation init yourself.</span>
+    </a>
+  </div>
+</header>
+
+<main>
+
+  <section class="halves" aria-label="Two ways in">
+    <div class="half reveal" id="with-an-agent">
+      <h2 class="h2">With an agent</h2>
+      <p>Install the skill, then say <em>“use project-foundation to bootstrap this repository”</em>. The agent looks first, sends one message with what it found and the choices it proposes, waits for your answer, and shows the file list before it writes.</p>
+      <div class="code" data-ui><code>npx skills add bhoudebert/my-skills</code></div>
+    </div>
+    <div class="half reveal" id="from-the-command-line">
+      <h2 class="h2">From the command line</h2>
+      <p>Run it from the repository. It detects the stacks and your GitHub remote, asks the rest, and shows what it would write. Nothing needs installing, and it needs Node 22 or later.</p>
+      <div class="code" data-ui><code>npx github:bhoudebert/my-skills init --dry-run</code></div>
+    </div>
+  </section>
+
+  <div class="field">
+  <section class="trail" aria-labelledby="trail-title">
+    <div class="trail-head reveal">
+      <h2 id="trail-title" class="h2">Four steps, in this order.</h2>
+      <p>It looks before it asks, and asks before it writes. What it writes is one trail that every agent follows: <code>AGENTS.md</code> is the trail, and each agent is an ant.</p>
+      <figure class="plate">
+        <img src="assets/line-of-ants-inside-cave-29506146006.jpg" width="1920" height="1280" alt="A line of small black ants walking along the edge of a stone ledge" loading="lazy">
+        <figcaption>A line of ants on a stone ledge. A trail is laid once and followed by all.</figcaption>
+      </figure>
+    </div>
+    <div class="slip reveal" data-ui>
+      <h3 class="slip-head">Before anything is written</h3>
+      <p class="row"><span>Reads your manifests and git remote</span><i></i><b>instant</b></p>
+      <p class="row"><span>Asks only what it cannot see</span><i></i><b>about a minute</b></p>
+      <p class="row"><span>Lists every file it would write</span><i></i><b>instant</b></p>
+      <h3 class="slip-head">Then</h3>
+      <p class="row"><span>Writes the files, overwrites none</span><i></i><b>{{WRITE_DURATION}}</b></p>
+      <p class="row"><span>Records your answers and a hash of each file</span><i></i><b>instant</b></p>
+      <h3 class="slip-head">Later</h3>
+      <p class="row"><span>Compares your edits with new templates</span><i></i><b>on demand</b></p>
+      <p class="row row-total"><span>You hold {{FILES}} files and a record of them</span><b>about a minute</b></p>
+    </div>
+  </section>
+  </div>
+
+  <section class="demo" aria-labelledby="demo-title">
+    <h2 id="demo-title" class="h2 reveal">Choose, and watch the files.</h2>
+    <p class="demo-lead reveal">Each control is a real answer of the tool. The files are the ones it would write.</p>
+    <div class="panel reveal" data-ui>
+      <div class="panel-view">
+        <p class="panel-count"><span data-total>{{DEMO_COUNT}}</span> files</p>
+        <pre class="tree"><code data-tree>{{DEMO_TREE}}</code></pre>
+      </div>
+      <div class="panel-controls" role="group" aria-label="Choices">
+{{CONTROLS}}
+      </div>
+    </div>
+    <div class="code code-wide reveal" data-ui><pre><code>{{GUARDS}}</code></pre></div>
+    <p class="demo-foot reveal">The hooks it installs, run for real: git refuses a commit on <code>main</code>, a message that is not a Conventional Commit, and a push to <code>main</code>.</p>
+  </section>
+
+  <section class="faq" aria-labelledby="faq-title">
+    <h2 id="faq-title" class="faq-title">Questions</h2>
+    <div class="qa-list" data-qa>
+{{QA}}
+    </div>
+  </section>
+
+  <section class="cta" aria-labelledby="cta-title">
+    <p id="cta-title" class="cta-line reveal">Install the skill, then ask your agent to bootstrap the repository. It asks first, and shows a preview before it writes anything.</p>
+    <button class="button reveal" type="button" data-copy="{{INSTALL}}">Copy the install command</button>
+  </section>
+
+</main>
+
+<footer class="foot">
+  <div class="strip">
+    <p>Rules for every coding agent.</p>
+    <nav aria-label="Project">
+      <a href="{{REPO_URL}}#readme">README</a>
+      <a href="{{REPO_URL}}/tree/main/docs">Documentation</a>
+      <a href="{{REPO_URL}}/blob/main/skills/project-foundation/SKILL.md">The skill</a>
+      <a href="{{REPO_URL}}/issues">Issues</a>
+    </nav>
+    <p class="strip-right">Version {{VERSION}} · MIT</p>
+  </div>
+  {{CREDITS}}
+</footer>
+
+<script type="application/json" id="switch-data">{{SWITCHES_JSON}}</script>
+<script src="app.js" defer></script>
+</body>
+</html>

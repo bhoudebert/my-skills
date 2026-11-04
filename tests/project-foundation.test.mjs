@@ -944,6 +944,32 @@ describe("badges", () => {
   });
 });
 
+describe("the site", () => {
+  test("is built from the real tool, and says one number everywhere", () => {
+    const built = spawnSync(process.execPath, [path.join(SKILL, "..", "..", "scripts", "build-site.mjs")], { encoding: "utf8" });
+    assert.equal(built.status, 0, built.stderr);
+    const site = path.join(SKILL, "..", "..", "site");
+    const html = readFileSync(path.join(site, "index.html"), "utf8");
+    assert.doesNotMatch(html, /\{\{[A-Z_]+\}\}/, "no placeholder is left");
+    const slip = Number(/You hold (\d+) files/.exec(html)?.[1]);
+    const demo = Number(/data-total>(\d+)</.exec(html)?.[1]);
+    const shown = (html.match(/class="tree-file"/g) ?? []).length;
+    assert.ok(slip > 30, "the itinerary names the real count");
+    assert.deepEqual([demo, shown], [slip, slip], "the itinerary, the counter and the tree agree");
+    const created = slip;
+    // What looks like output is output: the refusals are the hooks' own words.
+    assert.match(html, /you are on main\. Create a branch first/);
+    assert.match(html, /refusing to push to main\. Push a branch and open a pull request/);
+    assert.match(html, /<h1 class="statement">[\s\S]*One rules file\.[\s\S]*Every agent follows it\./);
+    assert.doesNotMatch(html, /portrait-of-an-ant-profile-view\.jpg[\s\S]*Nepal/, "no picture of people");
+    for (const image of html.match(/assets\/[\w.-]+\.jpg/g) ?? []) assert.ok(existsSync(path.join(site, image)), `${image} exists`);
+    const data = JSON.parse(readFileSync(path.join(site, "data.json"), "utf8"));
+    assert.equal(data.totals[data.startMask], created);
+    assert.equal(data.version, readFileSync(path.join(SKILL, "VERSION"), "utf8").trim());
+    for (const sw of data.switches) assert.ok(sw.added.length > 0, `${sw.key} adds files`);
+  });
+});
+
 describe("YAML", () => {
   test("every generated workflow and config parses", (t) => {
     const modules = process.env.YAML_NODE_PATH;

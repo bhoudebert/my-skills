@@ -1,0 +1,53 @@
+name: Pages
+
+# The site is built from the real tool (scripts/build-site.mjs runs the engine and the hooks and puts what they print on the page),
+# then published to GitHub Pages. Enable it once: Settings, Pages, Source: GitHub Actions.
+on:
+  push:
+    branches: [main]
+    paths:
+      - "site/**"
+      - "skills/**"
+      - "scripts/build-site.mjs"
+      - ".github/workflows/pages.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: "24"
+      - name: Build the site from the real tool
+        run: node scripts/build-site.mjs
+      - name: Collect what is published
+        run: |
+          mkdir _site
+          cp site/index.html site/styles.css site/app.js site/data.json _site/
+          cp -r site/assets _site/assets
+          touch _site/.nojekyll
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v4
+        with:
+          path: _site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

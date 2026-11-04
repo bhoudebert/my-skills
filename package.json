@@ -3,15 +3,23 @@
   "version": "0.1.0",
   "private": true,
   "type": "module",
-  "description": "AI skills, installable with `npx skills add`",
+  "description": "Agent skills: project-foundation bootstraps a repository with one AGENTS.md for every coding agent, hooks, CI and releases",
   "engines": {
     "node": ">=22"
   },
   "scripts": {
-    "test": "node --test 'tests/**/*.test.mjs'"
+    "test": "node --test 'tests/**/*.test.mjs'",
+    "quality": "npm test",
+    "site": "node scripts/build-site.mjs"
   },
   "license": "MIT",
   "bin": {
+    "project-foundation": "skills/project-foundation/scripts/foundation.mjs",
     "my-skills": "skills/project-foundation/scripts/foundation.mjs"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bhoudebert/my-skills.git"
+  },
+  "author": "bhoudebert"
 }

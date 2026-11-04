@@ -1,0 +1,185 @@
+/* project-foundation: the quiet instrument.
+   STIX Two Text, one family. Cool grey ground, near-black ink, one cobalt accent.
+   One column of text, small exact demonstrations, no rules, no shadows, no gradients. */
+
+:root {
+  --bg: #eef0f3;
+  --surface: #e2e5ea;
+  --ink: #0b0c0e;
+  --muted: #5d6470;
+  --accent: #1f2de6;
+  --accent-ink: #ffffff;
+  --wall: #0b0c0e;
+  --wall-ink: #eef0f3;
+  --wall-soft: #a8aebb;
+
+  --font: "STIX Two Text", "Iowan Old Style", "Palatino Linotype", Georgia, "Times New Roman", serif;
+  --small: 0.9375rem;
+  --body: clamp(1.125rem, 1.05rem + 0.3vw, 1.3125rem);
+  --lead: clamp(1.25rem, 1.1rem + 0.7vw, 1.625rem);
+  --head: clamp(1.75rem, 1.3rem + 1.6vw, 2.5rem);
+  --display: clamp(2.25rem, 1.4rem + 3.4vw, 3.5rem);
+
+  --margin: 32px;
+  --gutter: 24px;
+  --section: clamp(72px, 8vw, 112px);
+  --measure: 1060px;
+  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--font); font-size: var(--body); line-height: 1.5; -webkit-font-smoothing: antialiased; }
+img { display: block; max-width: 100%; height: auto; }
+a { color: inherit; text-underline-offset: 0.18em; transition: color 180ms; }
+a:hover { color: var(--accent); }
+:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
+::selection { background: var(--accent); color: var(--accent-ink); }
+p, h1, h2, h3, figure, ul { margin: 0; }
+code { font-family: var(--font); font-weight: 600; font-style: normal; background: var(--surface); padding: 0.04em 0.3em; }
+em { font-style: italic; }
+
+.h2, .statement { font-weight: 400; letter-spacing: -0.026em; line-height: 1.1; }
+.h2 { font-size: var(--head); }
+
+/* ------------------------------------------------------------------ the wall: a dark field, a sentence, two doors */
+.wall { background: var(--wall); color: var(--wall-ink); padding: 0 var(--margin) 150px; }
+.bar { display: flex; justify-content: space-between; padding: 28px 0 0; font-size: var(--small); }
+.bar a { text-decoration: none; }
+.bar a:hover { color: #fff; text-decoration: underline; }
+.wordmark { font-weight: 600; }
+.statement { margin: 76px auto 0; max-width: 18ch; text-align: center; font-size: var(--display); }
+.statement span { display: block; }
+.doors { display: flex; justify-content: center; gap: 80px; margin-top: 72px; }
+.door { width: 280px; text-decoration: none; color: inherit; transition: opacity 200ms var(--ease); }
+.door img { width: 280px; height: 373px; object-fit: cover; }
+.door:first-child img { object-position: 24% 50%; }
+.door-name { display: block; margin-top: 16px; font-size: 1.375rem; color: var(--wall-ink); }
+.door-line { display: block; font-size: 1rem; color: var(--wall-soft); line-height: 1.4; }
+.doors:hover .door { opacity: 0.55; }
+.doors .door:hover, .doors .door:focus-visible { opacity: 1; }
+.door:hover .door-name { text-decoration: underline; text-underline-offset: 0.18em; }
+
+/* ------------------------------------------------------------------ the two halves */
+main { padding-inline: var(--margin); }
+.halves, .trail, .demo, .faq, .cta { max-width: var(--measure); margin-inline: auto; }
+.halves { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gutter); padding-top: var(--section); }
+.half:nth-child(1) { grid-column: 1 / span 5; }
+.half:nth-child(2) { grid-column: 7 / span 6; }
+.half p { margin-top: 14px; max-width: 34em; }
+.code { margin-top: 22px; background: var(--wall); color: var(--wall-ink); padding: 16px 20px; overflow-x: auto; }
+.code code { background: none; padding: 0; font-weight: 400; font-family: ui-monospace, "SF Mono", "Cascadia Code", Menlo, Consolas, monospace; font-size: 0.9375rem; white-space: pre-wrap; }
+.code pre { margin: 0; }
+
+/* ------------------------------------------------------------------ the itinerary on a slip, on a cobalt field */
+.field { margin: var(--section) calc(var(--margin) * -1) 0; padding-inline: var(--margin); background: var(--accent); }
+.trail { margin-top: 0; display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gutter); padding: clamp(56px, 6vw, 88px) 0; align-items: start; }
+.trail-head { grid-column: 1 / span 5; color: var(--accent-ink); }
+.trail-head p { margin-top: 14px; max-width: 30em; }
+.trail-head code { background: rgba(255, 255, 255, 0.16); color: inherit; }
+.plate { margin-top: 28px; }
+.plate img { width: 100%; aspect-ratio: 3 / 2; object-fit: cover; }
+.plate figcaption { margin-top: 8px; font-size: var(--small); color: #dfe2ff; }
+.slip { grid-column: 7 / span 5; background: var(--bg); color: var(--ink); padding: 28px 28px 52px; font-size: 1rem; clip-path: polygon(0 0, 100% 0, 100% calc(100% - 14px), 96% 100%, 92% calc(100% - 14px), 88% 100%, 84% calc(100% - 14px), 80% 100%, 76% calc(100% - 14px), 72% 100%, 68% calc(100% - 14px), 64% 100%, 60% calc(100% - 14px), 56% 100%, 52% calc(100% - 14px), 48% 100%, 44% calc(100% - 14px), 40% 100%, 36% calc(100% - 14px), 32% 100%, 28% calc(100% - 14px), 24% 100%, 20% calc(100% - 14px), 16% 100%, 12% calc(100% - 14px), 8% 100%, 4% calc(100% - 14px), 0 100%); }
+.slip-head { font-size: 1rem; font-weight: 600; margin-top: 28px; }
+.slip-head:first-child { margin-top: 0; }
+.row { display: flex; align-items: baseline; gap: 8px; margin-top: 8px; font-variant-numeric: tabular-nums; }
+.row i { flex: 1; min-width: 12px; overflow: hidden; white-space: nowrap; color: var(--muted); letter-spacing: 0.35em; line-height: 1; }
+.row i::after { content: "· · · · · · · · · · · · · · · · · · · · · · · · · · · · · · · · · · · · · · · · · · · · · · · · · · · · · · · · · · · · · · · · · · · · · · ·"; }
+.row b { font-weight: 400; color: var(--muted); white-space: nowrap; }
+.row-total { margin-top: 28px; padding: 10px 14px; background: var(--ink); color: var(--bg); justify-content: space-between; min-height: 44px; align-items: center; }
+.row-total b { color: var(--bg); }
+
+/* ------------------------------------------------------------------ a live demonstration with controls */
+.demo { padding-top: var(--section); }
+.demo-lead { margin-top: 8px; font-size: 1rem; color: var(--muted); }
+.panel { display: grid; grid-template-columns: 62fr 38fr; margin-top: 28px; background: var(--surface); }
+.panel-view { padding: 24px 28px 28px; background: var(--wall); color: var(--wall-ink); min-height: 440px; }
+.panel-count { font-size: var(--lead); }
+.tree { margin: 14px 0 0; white-space: normal; }
+.tree code { font-family: ui-monospace, "SF Mono", "Cascadia Code", Menlo, Consolas, monospace; font-weight: 400; background: none; padding: 0; font-size: 0.875rem; line-height: 1.7; }
+.tree-dir { display: block; margin-bottom: 6px; }
+.tree-name { color: var(--wall-soft); }
+.tree-file { display: inline-block; margin-right: 12px; transition: color 300ms; }
+.tree-file.is-new { color: #9aa2ff; }
+.panel-controls { padding: 12px 0; }
+.control { display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 52px; padding: 0 20px; }
+.control-name { font-size: 1rem; }
+.toggle { position: relative; flex: none; width: 46px; height: 26px; padding: 0; background: var(--bg); border: 2px solid var(--ink); border-radius: 0; cursor: pointer; transition: background-color 160ms, border-color 160ms; }
+.toggle[aria-checked="true"] { background: var(--accent); border-color: var(--accent); }
+.knob { position: absolute; top: 3px; left: 3px; width: 16px; height: 16px; background: var(--ink); transition: transform 180ms var(--ease), background-color 160ms; }
+.toggle[aria-checked="true"] .knob { transform: translateX(20px); background: var(--accent-ink); }
+.code-wide { margin-top: 28px; }
+.code-wide code { font-size: 0.875rem; line-height: 1.6; }
+.t-dim { color: var(--wall-soft); }
+.demo-foot { margin-top: 12px; font-size: 1rem; color: var(--muted); max-width: 46em; }
+
+/* ------------------------------------------------------------------ question index, one answer */
+.faq { padding-top: var(--section); display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gutter); align-items: start; }
+.faq-title { grid-column: 1 / span 5; font-size: 1.125rem; font-weight: 400; color: var(--muted); margin-bottom: 18px; }
+.qa-list { display: contents; }
+.qa { grid-column: 1 / span 5; }
+.qa-q { font-weight: 400; }
+.qa-q button { all: unset; box-sizing: border-box; position: relative; display: block; width: 100%; padding: 9px 0 9px 24px; font-size: 1.125rem; line-height: 1.35; color: var(--muted); cursor: pointer; transition: color 160ms; }
+.qa-q button::before { content: ""; position: absolute; left: 0; top: 1.05em; width: 8px; height: 8px; background: var(--muted); transition: background-color 160ms; }
+.qa-q button:hover, .qa-q button:focus-visible { color: var(--ink); }
+.qa.is-open .qa-q button { color: var(--ink); }
+.qa.is-open .qa-q button::before { background: var(--accent); }
+.qa-a { font-size: 1rem; padding: 0 0 12px 24px; }
+.faq-pane { display: none; grid-column: 7 / span 6; grid-row: 1 / span 12; position: sticky; top: 96px; font-size: var(--lead); line-height: 1.32; max-width: 24em; min-height: 12em; transition: opacity 150ms; }
+.faq-pane.is-changing { opacity: 0; }
+.faq-pane code { font-size: 0.8em; }
+/* With script the answers move into the pane on the right: the list keeps only the questions. */
+.js .faq-pane { display: block; }
+.js .qa-a { display: none; }
+
+/* ------------------------------------------------------------------ a plain sentence, one action */
+.cta { padding-top: var(--section); padding-bottom: calc(var(--section) * 0.8); }
+.cta-line { font-size: var(--lead); max-width: 28em; }
+.button { display: inline-block; margin-top: 24px; padding: 11px 20px; background: var(--accent); color: var(--accent-ink); font: inherit; font-size: 1rem; line-height: 1.3; border: 0; border-radius: 0; cursor: pointer; transition: transform 140ms var(--ease), background-color 180ms; }
+.button:hover { background: var(--ink); color: var(--bg); }
+.button:active { transform: translateY(1px); }
+
+/* ------------------------------------------------------------------ a single quiet line */
+.foot { padding: 0 var(--margin) 28px; font-size: var(--small); color: var(--muted); }
+.strip { max-width: var(--measure); margin-inline: auto; display: grid; grid-template-columns: 1fr auto 1fr; align-items: baseline; gap: 24px; }
+.strip nav { display: flex; gap: 24px; }
+.strip nav a { color: var(--ink); text-decoration: none; }
+.strip nav a:hover { color: var(--accent); text-decoration: underline; }
+.strip-right { text-align: right; }
+.credits { max-width: var(--measure); margin: 28px auto 0; line-height: 1.5; }
+.credits a { color: var(--ink); }
+
+/* ------------------------------------------------------------------ motion: a few small entrances, transform and opacity only */
+.js .reveal { opacity: 0; transform: translateY(10px); }
+.js .reveal.in { opacity: 1; transform: none; transition: opacity 420ms var(--ease), transform 420ms var(--ease); transition-delay: var(--delay, 0ms); }
+@media (prefers-reduced-motion: reduce) {
+  .js .reveal, .js .reveal.in { opacity: 1; transform: none; transition: none; }
+  .faq-pane { transition: none; }
+}
+
+/* ------------------------------------------------------------------ small screens: the same page, stacked */
+@media (max-width: 820px) {
+  :root { --margin: 20px; --gutter: 12px; --measure: 560px; }
+  .wall { padding-bottom: 72px; }
+  .statement { margin-top: 56px; font-size: clamp(2rem, 8vw, 2.5rem); }
+  .doors { gap: 14px; margin-top: 44px; }
+  .door { width: 168px; }
+  .door img { width: 168px; height: 224px; }
+  .door-name { font-size: 1.0625rem; }
+  .door-line { font-size: 0.9375rem; }
+  .halves, .trail, .faq { display: block; }
+  .half + .half { margin-top: 44px; }
+  .trail { padding: 48px 0; }
+  .field { margin-top: 72px; }
+  .slip { margin-top: 32px; padding: 22px 18px 48px; }
+  .panel { display: block; }
+  .panel-view { min-height: 0; }
+  .faq-pane { display: none !important; }
+  .js .qa-a { display: none; }
+  .js .qa.is-open .qa-a { display: block; font-size: 1.1875rem; line-height: 1.35; padding-bottom: 16px; }
+  .qa-q button { padding: 12px 0 12px 24px; }
+  .strip { display: block; }
+  .strip nav { flex-wrap: wrap; gap: 4px 18px; margin: 8px 0; }
+  .strip-right { text-align: left; }
+}
