@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{NAME}}: one rules file for every coding agent</title>
+  <meta name="description" content="Bootstrap a repository with one AGENTS.md that Claude, Codex, Gemini and Copilot all follow, git hooks that bind every agent, CI with a single required check and releases. One project or a monorepo of several stacks.">
+  <meta name="theme-color" content="#e8e8e3">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Big+Shoulders:wght@800&amp;family=Public+Sans:wght@400;600&amp;display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header class="top">
+  <a class="wordmark" href="#top">{{NAME}}</a>
+  <nav aria-label="Page">
+    <a href="#output">Output</a>
+    <a href="#switches">Switches</a>
+    <a href="#faq">Questions</a>
+    <a href="{{REPO_URL}}">GitHub</a>
+  </nav>
+</header>
+
+<main id="top">
+
+  <section class="hero" aria-labelledby="title">
+    <h1 id="title" class="statement">
+      <span class="line line-1"><span class="line-in">One file.</span></span>
+      <span class="line line-2"><span class="line-in">All agents.</span></span>
+    </h1>
+    <div class="hero-foot">
+      <p class="lead hero-lead">One rules file for Claude, Codex, Gemini and Copilot. Git and CI hold them to it.</p>
+      <a class="button hero-action" href="#install">Install the skill</a>
+    </div>
+  </section>
+
+  <section class="stages" id="how" aria-labelledby="how-title">
+    <h2 id="how-title" class="head reveal">Ask first.<br>Write after.</h2>
+    <div class="bar reveal" data-ui>
+      <div class="seg seg-1" style="--grow:1"><span class="seg-time">Instant</span></div>
+      <div class="seg seg-2" style="--grow:10"><span class="seg-time">About a minute</span></div>
+      <div class="seg seg-3" style="--grow:1"><span class="seg-time">Instant</span></div>
+      <div class="seg seg-4" style="--grow:1"><span class="seg-time">{{WRITE_DURATION}}</span></div>
+    </div>
+    <ol class="clauses">
+      <li class="reveal">First, it reads your manifests and your git remote.</li>
+      <li class="reveal">Then it asks only what it cannot see.</li>
+      <li class="reveal">Next, it lists every file it would write.</li>
+      <li class="reveal">Last, it writes them, and overwrites nothing.</li>
+    </ol>
+  </section>
+
+  <section class="adapter" aria-labelledby="adapter-title">
+    <div class="adapter-head">
+      <h2 id="adapter-title" class="head-small reveal">The whole adapter.</h2>
+      <p class="adapter-text reveal">Claude Code reads CLAUDE.md and Gemini CLI reads GEMINI.md. Each file is one line that imports AGENTS.md, so there is one copy of the rules to edit and no stale copy to follow. Copilot gets a short digest instead, because it does not expand imports.</p>
+    </div>
+    <div class="specimens">
+      <div class="specimen reveal">
+        <div class="specimen-box"><span class="specimen-word">@AGENTS.md</span></div>
+        <p class="specimen-caption">CLAUDE.md, the whole file</p>
+      </div>
+      <div class="specimen reveal">
+        <div class="specimen-box specimen-inverse"><span class="specimen-word">@./AGENTS.md</span></div>
+        <p class="specimen-caption">GEMINI.md, the whole file</p>
+      </div>
+    </div>
+  </section>
+
+  <figure class="photo-band">
+    <div class="photo-frame"><img class="photo-img" src="assets/clay-as-mortar-with-natural-stone-used.jpg" width="1920" height="1280" alt="Masons squatting on a half-built stone house, laying flat stones in clay mortar inside a timber frame" loading="lazy"></div>
+    <figcaption class="photo-caption">
+      <span>Stone walls rise inside a timber frame, Dhading, Nepal.</span>
+      <span>The frame goes up before the last course is laid. The rules go in before the first feature.</span>
+    </figcaption>
+  </figure>
+
+  <section class="output" id="output" aria-labelledby="output-title">
+    <h2 id="output-title" class="head reveal">What it prints.</h2>
+    <div class="panels">
+      <figure class="panel panel-a reveal">
+        <figcaption>Asking, then writing</figcaption>
+        <div class="screen" data-ui><pre><code>{{TRANSCRIPT}}</code></pre></div>
+      </figure>
+      <figure class="panel panel-b reveal">
+        <figcaption>The {{FILES}} files it wrote</figcaption>
+        <div class="screen tree" data-ui><pre><code>{{TREE}}</code></pre></div>
+      </figure>
+      <figure class="panel panel-c reveal">
+        <figcaption>What git says</figcaption>
+        <div class="screen" data-ui><pre><code>{{GUARDS}}</code></pre></div>
+      </figure>
+      <figure class="panel panel-d reveal">
+        <figcaption>What upgrade says after you edit a file</figcaption>
+        <div class="screen" data-ui><pre><code>{{UPGRADE}}</code></pre></div>
+      </figure>
+    </div>
+  </section>
+
+  <section class="switches" id="switches" aria-label="What each choice adds">
+{{BANDS}}
+    <noscript><p class="noscript">Each sentence above is a choice the command asks you, and each one adds the files listed under it.</p></noscript>
+  </section>
+
+  <section class="faq" id="faq" aria-labelledby="faq-title">
+    <div class="faq-side">
+      <h2 id="faq-title" class="head-small reveal">Asked often.</h2>
+      <figure class="fresco reveal">
+        <div class="fresco-frame"><img class="fresco-img" src="assets/the-ceremony-of-laying-the-foundation-stone.jpg" width="1920" height="894" alt="A painted scene of a court laying the foundation stone of a palace, with a pavilion, soldiers and a mountain behind" loading="lazy"></div>
+        <figcaption>Laying a foundation stone, 1738, painted on a palace ceiling.</figcaption>
+      </figure>
+    </div>
+    <div class="faq-text">
+{{FAQ}}
+    </div>
+  </section>
+
+  <section class="cta" id="install" aria-labelledby="install-title">
+    <h2 id="install-title" class="statement-2"><span class="line"><span class="line-in">Start with</span></span> <span class="line"><span class="line-in">the file.</span></span></h2>
+    <div class="cta-foot">
+      <p class="lead">Run <code class="cmd">{{INSTALL}}</code>, then ask your agent to bootstrap the repository. It asks first and shows a preview before it writes.</p>
+      <button class="button button-accent" type="button" data-copy="{{INSTALL}}">Copy the command</button>
+    </div>
+  </section>
+
+</main>
+
+<footer class="foot">
+  <div class="foot-cols">
+    <ul>
+      <li class="strong">{{NAME}}</li>
+      <li>Version {{VERSION}}</li>
+      <li>MIT licence</li>
+    </ul>
+    <ul>
+      <li class="strong">Read</li>
+      <li><a href="{{REPO_URL}}#readme">The README</a></li>
+      <li><a href="{{REPO_URL}}/blob/main/skills/project-foundation/SKILL.md">The skill</a></li>
+      <li><a href="{{REPO_URL}}/tree/main/docs">The documentation</a></li>
+    </ul>
+    <ul>
+      <li class="strong">Source</li>
+      <li><a href="{{REPO_URL}}">GitHub</a></li>
+      <li><a href="{{REPO_URL}}/issues">Issues</a></li>
+      <li><a href="{{REPO_URL}}/releases">Releases</a></li>
+    </ul>
+    <ul>
+      <li class="strong">Install</li>
+      <li><code class="cmd">{{INSTALL}}</code></li>
+      <li>Needs Node 22 or later</li>
+    </ul>
+  </div>
+  <svg class="wordmark-big" viewBox="0 0 1000 150" role="img" aria-label="{{NAME}}" preserveAspectRatio="xMidYMax meet">
+    <text x="0" y="141" textLength="1000" lengthAdjust="spacingAndGlyphs">{{NAME}}</text>
+  </svg>
+  {{CREDITS}}
+  <p class="legal">Built with its own rules: the repository follows the workflow it generates.</p>
+</footer>
+
+<script type="application/json" id="switch-data">{{SWITCHES_JSON}}</script>
+<script src="app.js" defer></script>
+</body>
+</html>

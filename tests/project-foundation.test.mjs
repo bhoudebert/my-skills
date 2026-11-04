@@ -944,6 +944,30 @@ describe("badges", () => {
   });
 });
 
+describe("the site", () => {
+  test("is built from the real tool, and says one number everywhere", () => {
+    const built = spawnSync(process.execPath, [path.join(SKILL, "..", "..", "scripts", "build-site.mjs")], { encoding: "utf8" });
+    assert.equal(built.status, 0, built.stderr);
+    const site = path.join(SKILL, "..", "..", "site");
+    const html = readFileSync(path.join(site, "index.html"), "utf8");
+    assert.doesNotMatch(html, /\{\{[A-Z_]+\}\}/, "no placeholder is left");
+    const created = Number(/(\d+) file\(s\) created/.exec(html)?.[1]);
+    const together = Number(/Together: <span data-total>(\d+)/.exec(html)?.[1]);
+    const caption = Number(/The (\d+) files it wrote/.exec(html)?.[1]);
+    assert.ok(created > 30, "the init session is real");
+    assert.deepEqual([together, caption], [created, created], "the session, the tree and the switches agree");
+    // What looks like output is output: the refusals are the hooks' own words.
+    assert.match(html, /you are on main\. Create a branch first/);
+    assert.match(html, /refusing to push to main\. Push a branch and open a pull request/);
+    assert.match(html, /can be updated from the templates/);
+    assert.match(html, /<h1 id="title"[^>]*>[\s\S]*One file\.[\s\S]*All agents\./);
+    const data = JSON.parse(readFileSync(path.join(site, "data.json"), "utf8"));
+    assert.equal(data.totals[data.startMask], created);
+    assert.equal(data.version, readFileSync(path.join(SKILL, "VERSION"), "utf8").trim());
+    for (const sw of data.switches) assert.ok(sw.added.length > 0, `${sw.key} adds files`);
+  });
+});
+
 describe("YAML", () => {
   test("every generated workflow and config parses", (t) => {
     const modules = process.env.YAML_NODE_PATH;
