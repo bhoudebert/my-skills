@@ -9,7 +9,7 @@ import { cpSync, existsSync, mkdirSync, readFileSync, readdirSync, rmSync, statS
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { marked } from "marked";
-import { ROOT, nav, pagesInOrder, titleOf } from "./docs.mjs";
+import { ROOT, nav, pagesInOrder, stripTags, titleOf } from "./docs.mjs";
 
 const SITE = path.join(ROOT, "site");
 const config = JSON.parse(readFileSync(path.join(SITE, "src", "config.json"), "utf8"));
@@ -29,9 +29,7 @@ export function siteUrl(file) {
 }
 
 const slug = (heading) =>
-  heading
-    .toLowerCase()
-    .replace(/<[^>]+>/g, "")
+  stripTags(heading.toLowerCase())
     .replace(/`/g, "")
     .replace(/[^\p{L}\p{N} _-]/gu, "")
     .trim()
@@ -112,7 +110,7 @@ function sidebar(url) {
     .join("\n");
 }
 
-const plain = (html) => html.replace(/<pre[\s\S]*?<\/pre>/g, " ").replace(/<[^>]+>/g, " ").replace(/&[a-z]+;/g, " ").replace(/\s+/g, " ").trim();
+const plain = (html) => stripTags(html.replace(/<pre[\s\S]*?<\/pre>/g, " "), " ").replace(/&[a-z]+;/g, " ").replace(/\s+/g, " ").trim();
 
 export function buildDocsSite() {
   const template = readFileSync(path.join(SITE, "src", "doc.template.html"), "utf8");

@@ -9,6 +9,7 @@ import { existsSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "no
 import os from "node:os";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { stripTags } from "./docs.mjs";
 
 const ROOT = path.join(path.dirname(fileURLToPath(import.meta.url)), "..");
 const OUT = path.join(ROOT, "docs", "images");
@@ -86,7 +87,7 @@ for (const [name, lines] of Object.entries(screens)) {
   const file = path.join(tmp, `${name}.html`);
   writeFileSync(file, page(lines));
   // Height from the number of lines, then the screenshot: a fixed window, not a guess about the font.
-  const longest = Math.max(...lines.map((l) => l.replace(/<[^>]+>/g, "").length));
+  const longest = Math.max(...lines.map((l) => stripTags(l).length));
   const width = Math.min(1180, Math.max(560, Math.round(longest * 9.1) + 70));
   const height = Math.round(lines.length * 24.8 + 64);
   const run = spawnSync(

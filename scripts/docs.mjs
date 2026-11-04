@@ -105,11 +105,24 @@ export function generatedFilesPage() {
 }
 
 // ------------------------------------------------------------------------------------------------ links
+/** Removes every `<...>` tag by scanning, so no leftover such as `<scr<b>ipt>` can survive (a single regex pass can leave one). */
+export function stripTags(text, replacement = "") {
+  let out = "";
+  let depth = 0;
+  for (const ch of text) {
+    if (ch === "<") {
+      if (depth === 0) out += replacement;
+      depth++;
+    }
+    else if (ch === ">" && depth > 0) depth--;
+    else if (depth === 0) out += ch;
+  }
+  return out;
+}
+
 const FENCE = /^(```|~~~)/;
 const slug = (heading) =>
-  heading
-    .toLowerCase()
-    .replace(/<[^>]+>/g, "")
+  stripTags(heading.toLowerCase())
     .replace(/`/g, "")
     .replace(/[^\p{L}\p{N} _-]/gu, "")
     .trim()
