@@ -11,9 +11,11 @@
 Claude, Codex, Gemini and Copilot follow it. Git and CI hold them to it.</p>
 
 <p align="center">
+
 <!-- badges:start -->
 [![CI](https://github.com/bhoudebert/project-foundation/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/bhoudebert/project-foundation/actions/workflows/ci.yml) [![CodeQL](https://github.com/bhoudebert/project-foundation/actions/workflows/codeql.yml/badge.svg?branch=main)](https://github.com/bhoudebert/project-foundation/actions/workflows/codeql.yml) [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 <!-- badges:end -->
+
 </p>
 
 <p align="center">
