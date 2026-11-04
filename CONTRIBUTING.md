@@ -1,6 +1,6 @@
 # Contributing
 
-Thank you for helping with my-skills. This page is the map: how a change
+Thank you for helping with project-foundation. This page is the map: how a change
 goes from a need to a release, what is checked and where, and what a commit
 looks like. People and coding agents follow the same path (`AGENTS.md` holds the
 short rules for agents).

@@ -45,7 +45,7 @@ Task by task: what to do, how to check it, what to do when it goes wrong.
 [Contributing](../CONTRIBUTING.md), the [roadmap](../ROADMAP.md), the [changelog](../CHANGELOG.md), and the
 [workflow this repository follows](EVOLVING.md).
 
-The same pages are published, with search and a sidebar, at **<https://bhoudebert.github.io/my-skills/docs/>**.
+The same pages are published, with search and a sidebar, at **<https://bhoudebert.github.io/project-foundation/docs/>**.
 
 <!-- docs-nav:start -->
 ---

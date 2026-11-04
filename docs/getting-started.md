@@ -13,14 +13,14 @@ From an empty folder, or an existing repository, to one that every agent and con
 The command line needs no install:
 
 ```bash
-npx github:bhoudebert/my-skills init
+npx github:bhoudebert/project-foundation init
 ```
 
 To have an agent run it for you, install the skill (a project install is committed with the repository; `-g` makes it available in
 every project):
 
 ```bash
-npx skills add bhoudebert/my-skills
+npx skills add bhoudebert/project-foundation
 ```
 
 To keep the `project-foundation` command on your `PATH`, run `npm link` in a clone of this repository.

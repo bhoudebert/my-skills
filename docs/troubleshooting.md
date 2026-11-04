@@ -76,7 +76,7 @@ GitHub branch protection, which you enable: see
 
 ## `npx skills check` says nothing to update for a local clone
 
-It only checks skills installed from a remote source. Run `npx skills add bhoudebert/my-skills` to install from GitHub, then
+It only checks skills installed from a remote source. Run `npx skills add bhoudebert/project-foundation` to install from GitHub, then
 `check` and `update` work.
 
 ## The first commit is refused on `main`
@@ -86,7 +86,7 @@ branch (`git switch -c chore/…`) or use `ALLOW_DEFAULT_BRANCH=1 git commit …
 
 ## Still stuck
 
-Open an [issue](https://github.com/bhoudebert/my-skills/issues) with the output of `project-foundation status`, your answers
+Open an [issue](https://github.com/bhoudebert/project-foundation/issues) with the output of `project-foundation status`, your answers
 (from `.project-foundation.json`, without anything private) and what you ran.
 
 <!-- docs-nav:start -->

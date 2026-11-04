@@ -7,7 +7,7 @@ single source of the rules, and `CLAUDE.md`, `GEMINI.md` and
 
 ## What this is
 
-my-skills: Agent skills. project-foundation bootstraps a repository with one AGENTS.md for every coding agent, hooks, CI and releases.
+project-foundation: Agent skills. project-foundation bootstraps a repository with one AGENTS.md for every coding agent, hooks, CI and releases.
 
 `README.md` explains the product, `CONTRIBUTING.md` how to contribute,
 `docs/ENGINEERING.md` how it is built, `docs/EVOLVING.md` the path every change

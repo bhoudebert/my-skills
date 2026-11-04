@@ -20,7 +20,7 @@ workflow live at the root. Each component adds what is its own.
 If your stacks live in folders (`services/api/Cargo.toml`, `web/package.json`…), `init` finds them:
 
 ```bash
-npx github:bhoudebert/my-skills init --dry-run
+npx github:bhoudebert/project-foundation init --dry-run
 ```
 
 It prints `Found: rust in services/api, python in services/worker, node in web` and asks for a name for each. Names are kebab-case: they
@@ -46,7 +46,7 @@ Write an answers file and pass it:
 ```
 
 ```bash
-npx github:bhoudebert/my-skills init --config answers.json
+npx github:bhoudebert/project-foundation init --config answers.json
 ```
 
 An optional `owner` on a component adds a CODEOWNERS line for its folder. Any profile value can be overridden per component

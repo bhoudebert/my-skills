@@ -19,8 +19,8 @@ concurrency:
 # one required check: it passes when every job passed or was skipped, so a path filter can never leave a required check
 # pending (which a filter on the workflow itself would).
 jobs:
-  quality-my-skills:
-    name: my-skills (Node.js / TypeScript)
+  quality-project-foundation:
+    name: project-foundation (Node.js / TypeScript)
     runs-on: ubuntu-latest
     timeout-minutes: 20
     defaults:
@@ -51,7 +51,7 @@ jobs:
   quality:
     name: Quality gate
     if: always()
-    needs: [commits, quality-my-skills]
+    needs: [commits, quality-project-foundation]
     runs-on: ubuntu-latest
     steps:
       - name: Every job passed or was skipped

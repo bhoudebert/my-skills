@@ -1,5 +1,5 @@
 {
-  "name": "my-skills",
+  "name": "project-foundation",
   "version": "0.1.0",
   "private": true,
   "type": "module",
@@ -22,7 +22,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/bhoudebert/my-skills.git"
+    "url": "git+https://github.com/bhoudebert/project-foundation.git"
   },
   "author": "bhoudebert",
   "devDependencies": {

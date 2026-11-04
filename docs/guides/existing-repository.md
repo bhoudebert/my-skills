@@ -22,7 +22,7 @@ The rules this project installs ask every agent to branch before editing; do the
 ## 2. Preview, and read the skipped list
 
 ```bash
-npx github:bhoudebert/my-skills init --dry-run
+npx github:bhoudebert/project-foundation init --dry-run
 ```
 
 Three lists matter:
@@ -36,7 +36,7 @@ Three lists matter:
 ## 3. Generate
 
 ```bash
-npx github:bhoudebert/my-skills init
+npx github:bhoudebert/project-foundation init
 ```
 
 It detects your stacks from your manifests (`package.json`, `Cargo.toml`, `pom.xml`, `build.gradle`, `pyproject.toml`, `go.mod`) and

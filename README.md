@@ -12,7 +12,7 @@ Claude, Codex, Gemini and Copilot follow it. Git and CI hold them to it.</p>
 
 <p align="center">
 <!-- badges:start -->
-[![CI](https://github.com/bhoudebert/my-skills/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/bhoudebert/my-skills/actions/workflows/ci.yml) [![CodeQL](https://github.com/bhoudebert/my-skills/actions/workflows/codeql.yml/badge.svg?branch=main)](https://github.com/bhoudebert/my-skills/actions/workflows/codeql.yml) [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+[![CI](https://github.com/bhoudebert/project-foundation/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/bhoudebert/project-foundation/actions/workflows/ci.yml) [![CodeQL](https://github.com/bhoudebert/project-foundation/actions/workflows/codeql.yml/badge.svg?branch=main)](https://github.com/bhoudebert/project-foundation/actions/workflows/codeql.yml) [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 <!-- badges:end -->
 </p>
 
@@ -22,7 +22,7 @@ Claude, Codex, Gemini and Copilot follow it. Git and CI hold them to it.</p>
   <a href="docs/README.md">Guides</a> ·
   <a href="docs/cli.md">Reference</a> ·
   <a href="docs/glossary.md">Glossary</a> ·
-  <a href="https://bhoudebert.github.io/my-skills/">Site</a>
+  <a href="https://bhoudebert.github.io/project-foundation/">Site</a>
 </p>
 
 ---
@@ -50,8 +50,8 @@ a branch, word a commit, run the tests, or whether it may change `main`. `projec
 You need [Node](https://nodejs.org) 22 or later. From your repository:
 
 ```bash
-npx github:bhoudebert/my-skills init --dry-run    # shows what it would write; writes nothing
-npx github:bhoudebert/my-skills init              # asks a few questions, shows a summary, writes
+npx github:bhoudebert/project-foundation init --dry-run    # shows what it would write; writes nothing
+npx github:bhoudebert/project-foundation init              # asks a few questions, shows a summary, writes
 ```
 
 It **looks** at your repository, **asks** only what it cannot see, **previews** every file, and **writes** them. It never overwrites a
@@ -62,7 +62,7 @@ file. This is its real output:
 Prefer your agent to do it? Install the skill and say *"use project-foundation to bootstrap this repository"*:
 
 ```bash
-npx skills add bhoudebert/my-skills
+npx skills add bhoudebert/project-foundation
 ```
 
 ## Choose your path
@@ -125,7 +125,7 @@ project-foundation upgrade --set nix=true --apply    # change a choice, update t
 **Is a model involved?** Not in generating: it is a Node script with no dependencies and no network.
 **Does it change GitHub settings?** No. It lists the commands and you run them.
 
-More in the [site](https://bhoudebert.github.io/my-skills/) and in [Troubleshooting](docs/troubleshooting.md).
+More in the [site](https://bhoudebert.github.io/project-foundation/) and in [Troubleshooting](docs/troubleshooting.md).
 
 ## Contributing
 

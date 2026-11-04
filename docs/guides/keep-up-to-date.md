@@ -19,7 +19,7 @@ To update the skill itself:
 npx skills update        # the skill, from where you installed it
 ```
 
-A skill installed from a local clone is not checked by `npx skills check`; install from GitHub (`npx skills add bhoudebert/my-skills`)
+A skill installed from a local clone is not checked by `npx skills check`; install from GitHub (`npx skills add bhoudebert/project-foundation`)
 for that to work.
 
 ## See what would change

@@ -15,7 +15,7 @@ git remote add origin git@github.com:acme/acme-billing.git   # optional now; it 
 ## 2. Preview
 
 ```bash
-npx github:bhoudebert/my-skills init --dry-run
+npx github:bhoudebert/project-foundation init --dry-run
 ```
 
 With no manifest yet (`package.json`, `Cargo.toml`…), it does not know your language and will ask for it. Pick the one you will use:
@@ -24,7 +24,7 @@ With no manifest yet (`package.json`, `Cargo.toml`…), it does not know your la
 ## 3. Generate
 
 ```bash
-npx github:bhoudebert/my-skills init
+npx github:bhoudebert/project-foundation init
 ```
 
 Answer the questions (Enter takes the proposed answer), read the summary it prints, and confirm. About forty files appear, including

@@ -54,13 +54,13 @@ About forty files in all, [each one explained](generated-files.md).
 You need [Node](https://nodejs.org) 22 or later. From your repository:
 
 ```bash
-npx github:bhoudebert/my-skills init --dry-run
+npx github:bhoudebert/project-foundation init --dry-run
 ```
 
 `--dry-run` means *show me, but write nothing*. Read the list. If it looks right:
 
 ```bash
-npx github:bhoudebert/my-skills init
+npx github:bhoudebert/project-foundation init
 ```
 
 It asks a handful of questions (press Enter to accept the proposed answer), shows your answers, and asks before writing.

@@ -5,7 +5,7 @@ project-foundation <command> [options]
 ```
 
 `my-skills` is an alias of the same command. Every command works on the current folder, or on `--target <folder>`. Without
-installing anything: `npx github:bhoudebert/my-skills <command>`. From a clone: `node skills/project-foundation/scripts/foundation.mjs <command>`.
+installing anything: `npx github:bhoudebert/project-foundation <command>`. From a clone: `node skills/project-foundation/scripts/foundation.mjs <command>`.
 
 ## `init`
 
