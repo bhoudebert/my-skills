@@ -69,8 +69,8 @@ After the answers, before writing, show the dry-run file list (step 3) and let t
 
 ### 3. Write the answers file and preview
 
-If the user has the `my-skills` command (`npm link` from the skills repository, or `npx github:bhoudebert/my-skills`), the
-simplest path is to tell them to run `my-skills init` in the repository: it detects the stacks and the GitHub owner and repo,
+If the user has the `project-foundation` command (`npm link` from the skills repository, or `npx github:bhoudebert/my-skills`), the
+simplest path is to tell them to run `project-foundation init` in the repository: it detects the stacks and the GitHub owner and repo,
 asks the rest, and needs no answers file. Otherwise write `answers.json` outside the repository (or in `/tmp`), then:
 
 ```bash
