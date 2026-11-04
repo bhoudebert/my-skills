@@ -28,18 +28,19 @@ const BASE = { project_name: "billing", project_slug: "billing", description: "I
 // ------------------------------------------------------------------------------------------------ the switches
 // Each is a real answer of the tool. The consequence is the difference in the files it would write.
 const SWITCHES = [
-  { key: "release_please", sentence: "Releases open themselves as a pull request.", on: true },
-  { key: "dependabot", sentence: "Dependencies are bumped every week.", on: true },
-  { key: "nix", sentence: "Every contributor gets the same toolchains.", on: false },
+  { key: "release_please", label: "Releases as pull requests", sentence: "Releases open themselves as a pull request.", on: true },
+  { key: "dependabot", label: "Weekly dependency updates", sentence: "Dependencies are bumped every week.", on: true },
+  { key: "nix", label: "Nix dev shell", sentence: "Every contributor gets the same toolchains.", on: false },
   // On, as the interview proposes it for a public repository; off for a private one without GitHub Code Security.
-  { key: "codeql", sentence: "Code is scanned for vulnerabilities.", on: true },
-  { key: "spec_driven", sentence: "Behaviour is specified before it is coded.", on: false },
+  { key: "codeql", label: "CodeQL scanning", sentence: "Code is scanned for vulnerabilities.", on: true },
+  { key: "spec_driven", label: "Specs checked against code", sentence: "Behaviour is specified before it is coded.", on: false },
 ];
 const answersFor = (mask) => ({ ...BASE, ...Object.fromEntries(SWITCHES.map((s, i) => [s.key, Boolean(mask & (1 << i))])) });
 const filesFor = (mask) => plan(answersFor(mask), null).files.map((f) => f.dest);
 
 const totals = {};
 for (let mask = 0; mask < 1 << SWITCHES.length; mask++) totals[mask] = filesFor(mask).length;
+const startMask0 = 0;
 const startMask = SWITCHES.reduce((m, s, i) => (s.on ? m | (1 << i) : m), 0);
 const switches = SWITCHES.map((s, i) => {
   const without = filesFor(startMask & ~(1 << i));
@@ -128,7 +129,8 @@ const states = [
 ];
 
 // ------------------------------------------------------------------------------------------------ data and page
-const data = { version: VERSION, writeMs, files: totals[startMask], totals, switches, startMask, tree, transcript, found, refused: { commit: refusedCommit.stderr, badMessage, push: refusedPush.stderr }, states, stacks: ["Node", "Java", "Rust", "Python", "Go"] };
+const filesByMask = Object.fromEntries(Array.from({ length: 1 << SWITCHES.length }, (_, mask) => [mask, filesFor(mask)]));
+const data = { version: VERSION, filesByMask, writeMs, files: totals[startMask], totals, switches, startMask, tree, transcript, found, refused: { commit: refusedCommit.stderr, badMessage, push: refusedPush.stderr }, states, stacks: ["Node", "Java", "Rust", "Python", "Go"] };
 writeFileSync(path.join(SITE, "data.json"), JSON.stringify(data, null, 2) + "\n");
 
 const treeHtml = Object.entries(tree)
@@ -177,6 +179,30 @@ const bandsHtml = [
     </div>`,
 ].join("\n");
 
+const treeFor = (files) => {
+  const dirs = {};
+  for (const f of files) {
+    const parts = f.split("/");
+    const dir = parts.length > 1 ? parts.slice(0, -1).join("/") : ".";
+    (dirs[dir] ??= []).push(parts.at(-1));
+  }
+  return Object.entries(dirs)
+    .map(([dir, names]) => `<span class="tree-dir"><span class="tree-name">${escapeHtml(dir === "." ? "./" : `${dir}/`)}</span> ${names.map((n) => `<span class="tree-file">${escapeHtml(n)}</span>`).join(" ")}</span>`)
+    .join("");
+};
+const qaHtml = faq
+  .map((item, i) => `      <div class="qa${i === 0 ? " is-open" : ""}">
+        <h3 class="qa-q"><button type="button" aria-expanded="${i === 0}">${escapeHtml(item.q)}</button></h3>
+        <div class="qa-a">${item.a}</div>
+      </div>`)
+  .join("\n");
+const controlsHtml = switches
+  .map((s) => `        <div class="control">
+          <span class="control-name" id="sw-${s.key}">${escapeHtml(s.label)}</span>
+          <button class="toggle" type="button" role="switch" aria-checked="${s.on}" aria-labelledby="sw-${s.key}" data-ui data-bit="${s.bit}"><span class="knob"></span></button>
+        </div>`)
+  .join("\n");
+
 const stageDuration = (ms) => (ms < 1000 ? "Under a second" : `${(ms / 1000).toFixed(1)} seconds`);
 const replacements = {
   NAME: config.name,
@@ -184,14 +210,17 @@ const replacements = {
   INSTALL: `npx skills add ${config.owner}/${config.repo}`,
   VERSION,
   FILES: String(data.files),
-  WRITE_DURATION: stageDuration(writeMs),
-  SWITCHES_JSON: JSON.stringify({ switches: switches.map(({ key, sentence, on, bit, added }) => ({ key, sentence, on, bit, added })), totals, startMask }).replace(/</g, "\\u003c"),
+  WRITE_DURATION: stageDuration(writeMs).toLowerCase(),
+  SWITCHES_JSON: JSON.stringify({ switches: switches.map(({ key, label, sentence, on, bit, added }) => ({ key, label, sentence, on, bit, added })), totals, startMask, filesByMask }).replace(/</g, "\\u003c"),
   TREE: treeHtml,
   TRANSCRIPT: transcriptHtml,
   GUARDS: guardHtml,
   UPGRADE: upgradeHtml,
   FAQ: faqHtml,
-  BANDS: bandsHtml,
+  QA: qaHtml,
+  CONTROLS: controlsHtml,
+  DEMO_TREE: treeFor(filesFor(startMask)),
+  DEMO_COUNT: String(totals[startMask]),
   CREDITS: readFileSync(path.join(SITE, "src", "credits.html"), "utf8").trim(),
 };
 let html = readFileSync(path.join(SITE, "src", "index.template.html"), "utf8");

@@ -951,16 +951,18 @@ describe("the site", () => {
     const site = path.join(SKILL, "..", "..", "site");
     const html = readFileSync(path.join(site, "index.html"), "utf8");
     assert.doesNotMatch(html, /\{\{[A-Z_]+\}\}/, "no placeholder is left");
-    const created = Number(/(\d+) file\(s\) created/.exec(html)?.[1]);
-    const together = Number(/Together: <span data-total>(\d+)/.exec(html)?.[1]);
-    const caption = Number(/The (\d+) files it wrote/.exec(html)?.[1]);
-    assert.ok(created > 30, "the init session is real");
-    assert.deepEqual([together, caption], [created, created], "the session, the tree and the switches agree");
+    const slip = Number(/You hold (\d+) files/.exec(html)?.[1]);
+    const demo = Number(/data-total>(\d+)</.exec(html)?.[1]);
+    const shown = (html.match(/class="tree-file"/g) ?? []).length;
+    assert.ok(slip > 30, "the itinerary names the real count");
+    assert.deepEqual([demo, shown], [slip, slip], "the itinerary, the counter and the tree agree");
+    const created = slip;
     // What looks like output is output: the refusals are the hooks' own words.
     assert.match(html, /you are on main\. Create a branch first/);
     assert.match(html, /refusing to push to main\. Push a branch and open a pull request/);
-    assert.match(html, /can be updated from the templates/);
-    assert.match(html, /<h1 id="title"[^>]*>[\s\S]*One file\.[\s\S]*All agents\./);
+    assert.match(html, /<h1 class="statement">[\s\S]*One rules file\.[\s\S]*Every agent follows it\./);
+    assert.doesNotMatch(html, /portrait-of-an-ant-profile-view\.jpg[\s\S]*Nepal/, "no picture of people");
+    for (const image of html.match(/assets\/[\w.-]+\.jpg/g) ?? []) assert.ok(existsSync(path.join(site, image)), `${image} exists`);
     const data = JSON.parse(readFileSync(path.join(site, "data.json"), "utf8"));
     assert.equal(data.totals[data.startMask], created);
     assert.equal(data.version, readFileSync(path.join(SKILL, "VERSION"), "utf8").trim());

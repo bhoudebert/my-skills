@@ -1,42 +1,34 @@
 [
   {
     "q": "Does it overwrite my files?",
-    "a": "No. A file that already exists is skipped and listed, and <code>.gitignore</code> only gains the lines it lacks. <code>upgrade</code> never touches a file you edited: the new template lands beside it as <code>&lt;file&gt;.upstream</code>."
+    "a": "No. A file that exists is skipped and listed, and <code>.gitignore</code> only gains the lines it lacks. <code>upgrade</code> never touches a file you edited: the new template lands beside it as <code>&lt;file&gt;.upstream</code>."
   },
   {
     "q": "Which agents does it support?",
-    "a": "Codex and Copilot read <code>AGENTS.md</code>; Claude Code and Gemini CLI import it with one line; Copilot code review gets a short digest. Another agent points at <code>AGENTS.md</code> the same way. The skill installs into about 75 agents through <code>npx skills</code>."
+    "a": "Codex and Copilot read <code>AGENTS.md</code>. Claude Code and Gemini CLI import it with one line. Copilot code review gets a short digest. Any other agent can point at <code>AGENTS.md</code> the same way."
   },
   {
     "q": "Do contributors need the skill?",
-    "a": "No. The rules, the hooks and the CI are plain files in the repository, so a contributor without the skill still gets all of them. Only <code>status</code>, <code>upgrade</code> and <code>badges</code> need it, and it can be committed with the repository."
+    "a": "No. The rules, hooks and CI are plain files in the repository. Only <code>status</code>, <code>upgrade</code> and <code>badges</code> need the skill, and it can be committed with the repository."
   },
   {
     "q": "Is a model involved?",
-    "a": "Not in generating. The command is a Node script with no dependencies and no network. An agent can run the interview for you when you ask it to, and the command line does the same without one."
+    "a": "Not in generating. The command is a Node script with no dependencies and no network. An agent can run the interview for you, or you can run it yourself."
   },
   {
     "q": "Which stacks?",
-    "a": "Node and TypeScript, Java with Maven or Gradle, Rust, Python and Go, plus an “other” profile. A monorepo can mix them: each component gets its own job, pin, instructions and release package, and one required check waits for all of them."
+    "a": "Node and TypeScript, Java with Maven or Gradle, Rust, Python and Go, plus an “other” profile. A monorepo can mix them: each component gets its own job, and one required check waits for all of them."
   },
   {
     "q": "What does it do on GitHub?",
-    "a": "It writes files only. Branch protection, merge settings, labels and secrets are yours to change, so it lists the commands instead of running them. On a private repository, CodeQL needs the paid GitHub Code Security, so init asks before it adds that workflow."
+    "a": "It writes files only. Branch protection, merge settings, labels and secrets are yours to change, so it lists the commands instead. On a private repository CodeQL needs the paid GitHub Code Security, so it asks first."
   },
   {
     "q": "How do updates work?",
-    "a": "<code>npx skills update</code> updates the skill. <code>upgrade</code> then compares what it generated, hash by hash, with the new templates, and writes only the files you have not edited. New answers given with <code>--config</code> are saved, so the next run starts from them."
+    "a": "<code>npx skills update</code> updates the skill. <code>upgrade</code> then compares what it generated, hash by hash, with the new templates, and writes only the files you have not edited."
   },
   {
     "q": "What stops an agent working on main?",
-    "a": "The generated rules tell it to check the branch before its first edit and to branch without asking. Git then refuses a commit on <code>main</code> and a push to it. Branch protection on GitHub, which you enable, is the final rule."
-  },
-  {
-    "q": "Does spec-driven work for every stack?",
-    "a": "Not yet. The spec reviewer assumes a <code>src/</code> layout and reads TypeScript test titles, so it suits TypeScript projects and is refused for a monorepo. Everything else works for every stack."
-  },
-  {
-    "q": "How do I remove it?",
-    "a": "Delete the files it generated: <code>.project-foundation.json</code> lists each one with its hash. Remove the skill with <code>npx skills remove project-foundation</code>. Nothing else is installed."
+    "a": "The rules tell it to check the branch before its first edit and to branch without asking. Git refuses a commit on <code>main</code> and a push to it. GitHub branch protection, which you enable, is the final rule."
   }
 ]

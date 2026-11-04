@@ -73,7 +73,7 @@ the hooks and `quality.sh` in real git repositories.
 ## The site
 
 `node scripts/build-site.mjs` runs the engine and the generated hooks in a throwaway repository and puts what they print on the page:
-the `init` session, the file tree, a refused commit and push, the `upgrade` states, the file counts behind each switch. It fails when
+the file tree and counts behind each switch (computed for all 32 combinations), a refused commit, a refused message and a refused push. It fails when
 two numbers on the page disagree. `.github/workflows/pages.yml` builds and publishes it.
 
 ## Changing something
