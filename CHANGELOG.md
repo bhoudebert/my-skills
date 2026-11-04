@@ -2,6 +2,12 @@
 
 Versions are the contents of `skills/project-foundation/VERSION`. This file is written by hand.
 
+## 0.4.0
+
+- `upgrade --set key=value` changes single answers on top of the recorded ones (`upgrade --set nix=true --apply`).
+- New documentation: start here, task guides, a glossary, every generated file explained, diagrams and real screenshots, all connected and
+  checked, and published on the site with a sidebar and search. A logo, a favicon and a social preview image.
+
 ## 0.3.2
 
 - The command is called `project-foundation` (`my-skills` stays as an alias). New site, README and documentation.
@@ -49,3 +55,10 @@ Versions are the contents of `skills/project-foundation/VERSION`. This file is w
 
 - First version: `init`, `status`, `upgrade`; `AGENTS.md` with adapters for Claude, Gemini and Copilot; hooks, CI, CodeQL, Dependabot,
   release-please; one project or a monorepo; optional Nix shell and spec-driven module.
+
+<!-- docs-nav:start -->
+---
+**Documentation:** [Start here](./docs/start-here.md) · [Guides](./docs/guides/new-project.md) · [Concepts](./docs/concepts.md) · [Reference](./docs/cli.md) · [Glossary](./docs/glossary.md) · [All pages](./docs/README.md)
+
+← [Roadmap](./ROADMAP.md) · [Security](./SECURITY.md) →
+<!-- docs-nav:end -->

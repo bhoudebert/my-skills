@@ -35,6 +35,7 @@ Compares the generated files with the current templates. See [Provenance and upg
 | Option | Meaning |
 | --- | --- |
 | `--apply` | write the safe changes; leave `<file>.upstream` next to a conflicting file |
+| `--set key=value` | change one answer on top of the recorded ones; repeatable (`--set nix=true`); `true`, `false` and numbers are read as such |
 | `--config <file>` | render with these answers instead of the recorded ones; with `--apply` they are saved |
 
 Without `--apply` nothing is written. Exit code 1 when a conflict is left to merge.
@@ -131,3 +132,10 @@ overrides go at the root.
 | 0 | done, or nothing to do |
 | 1 | a conflict is left to merge (`upgrade`), the templates changed (`status`), or you declined the confirmation (`init`) |
 | 2 | an error: a missing answer, an unknown profile, a repository already set up, a bad option |
+
+<!-- docs-nav:start -->
+---
+**Documentation:** [Start here](./start-here.md) · [Guides](./guides/new-project.md) · [Concepts](./concepts.md) · [Reference](./cli.md) · [Glossary](./glossary.md) · [All pages](./README.md)
+
+← [Concepts](./concepts.md) · [Every generated file](./generated-files.md) →
+<!-- docs-nav:end -->
