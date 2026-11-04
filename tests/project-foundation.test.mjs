@@ -270,6 +270,41 @@ describe("the commit check", () => {
   });
 });
 
+describe("what a repository tracks", () => {
+  test("files tracked although they are ignored are reported by init, upgrade and status, whenever they were added", () => {
+    const target = fresh("tracked");
+    mkdirSync(target);
+    git(target, "init", "-q");
+    mkdirSync(path.join(target, ".spec-review"));
+    writeFileSync(path.join(target, ".spec-review/report.json"), "{}");
+    writeFileSync(path.join(target, ".spec-review/report.md"), "x");
+    git(target, "add", "-A"); // a sweep, before any ignore rule exists
+    const config = { ...BASE, profile: "node", spec_driven: true };
+    const report = init({ config, target });
+    assert.match(read(target, ".gitignore"), /\.spec-review\//);
+    assert.ok(report.notes.some((n) => /2 file\(s\) under \.spec-review\/ are tracked by git although \.gitignore ignores them.*git rm -r --cached \.spec-review/.test(n)), report.notes.join("\n"));
+    assert.ok(upgrade({ target }).notes.some((n) => /\.spec-review\//.test(n)), "upgrade says it too, with or without --apply");
+    assert.ok(status(target).notes.some((n) => /\.spec-review\//.test(n)));
+    git(target, "rm", "-r", "-q", "--cached", ".spec-review");
+    assert.deepEqual(status(target).notes, [], "once untracked there is nothing to say");
+    const plain = fresh("not-git");
+    init({ config: { ...BASE, profile: "node" }, target: plain });
+    assert.deepEqual(status(plain).notes, [], "not a git repository: nothing to say");
+  });
+
+  test("the installed skill is committed by default (and the rules say how to update it), or ignored on request", () => {
+    const kept = outputs.get("node");
+    assert.doesNotMatch(read(kept, ".gitignore"), /^\.agents\/$/m);
+    const agents = read(kept, "AGENTS.md");
+    assert.match(agents, /skill is committed in this repository/);
+    assert.match(agents, /`chore\/update-project-foundation`/);
+    const apart = render({ ...BASE, profile: "node", skill_in_repo: false }, "skill-ignored");
+    assert.match(read(apart, ".gitignore"), /^\.agents\/$/m);
+    assert.match(read(apart, ".gitignore"), /^\.claude\/skills\/$/m);
+    assert.doesNotMatch(read(apart, "AGENTS.md"), /skill is committed in this repository/);
+  });
+});
+
 describe("starting and delivering a change", () => {
   const fresh2 = (config, label) => {
     const target = fresh(label);
@@ -285,6 +320,8 @@ describe("starting and delivering a change", () => {
     assert.match(agents, /On `main`\*\*: do not edit there\./);
     assert.match(agents, /Do not ask first/);
     assert.match(agents, /\*\*On another branch\*\*: ask once/);
+    assert.match(agents, /Stage only the files of your task\*\*: `git add <paths>`, never `git add -A` or `git commit -a`/);
+    assert.match(read(outputs.get("node"), ".github/copilot-instructions.md"), /never `git add -A`/);
     assert.match(agents, /gh pr create/);
     assert.match(agents, /pushing to\n  `main`, force-pushing/, "pushing a branch is not something to ask about");
     assert.match(read(outputs.get("node"), ".github/copilot-instructions.md"), /Before the first edit run `git branch --show-current`/);

@@ -80,6 +80,14 @@ request with the template (`gh pr create`), report its URL, and stop. Never merg
 When the work is done and the gate passes: commit, tell the user the branch name and that it is ready, and stop. Push and open
 the pull request only when asked.
 @@/unless@@
+**Stage only the files of your task**: `git add <paths>`, never `git add -A` or `git commit -a`. Anything else in the working
+tree is not yours: leave it, and mention it to the user.
+@@#if skill_in_repo@@
+The `project-foundation` skill is committed in this repository (`.agents/skills/`, `.claude/skills/`, `skills-lock.json`), so
+every contributor and agent has the same rules and tools. `npx skills update` changes those files: that is a change of its own,
+on its own branch (`chore/update-project-foundation`) and pull request, never mixed into another one.
+@@/if@@
+
 Git refuses a commit on `@@default_branch@@` and a push to it (`ALLOW_DEFAULT_BRANCH=1` for the rare exception), but that is a backstop: by
 then the edit is already done. The check above comes first.
 
