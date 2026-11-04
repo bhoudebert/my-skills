@@ -1,6 +1,6 @@
 # Contributing
 
-Thank you for helping with my-skills. This page is the map: how a change
+Thank you for helping with project-foundation. This page is the map: how a change
 goes from a need to a release, what is checked and where, and what a commit
 looks like. People and coding agents follow the same path (`AGENTS.md` holds the
 short rules for agents).
@@ -152,4 +152,12 @@ Keep in step with `AGENTS.md`:
   all of them, in one commit.
 - **Bump `skills/project-foundation/VERSION`** when a template or the engine changes: it is the version `status` reports.
 - **The site is built from the real tool.** Nothing on it that looks like output is typed by hand (`scripts/build-site.mjs`).
+- **The documentation is one connected guide.** After editing a page, run `npm run docs`: it rewrites the navigation blocks and the list of
+  generated files, and `npm test` fails on a broken link, anchor or image.
 
+<!-- docs-nav:start -->
+---
+**Documentation:** [Start here](./docs/start-here.md) · [Guides](./docs/guides/new-project.md) · [Concepts](./docs/concepts.md) · [Reference](./docs/cli.md) · [Glossary](./docs/glossary.md) · [All pages](./docs/README.md)
+
+← [Architecture decision records](./docs/adr/README.md) · [Roadmap](./ROADMAP.md) →
+<!-- docs-nav:end -->

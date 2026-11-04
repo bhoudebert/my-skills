@@ -54,3 +54,10 @@ so create it (above) before the first release.
 Ecosystem names for Dependabot: `npm`, `maven`, `gradle`, `cargo`, `pip`, `gomod`, `docker`, `nuget`, `composer`,
 `bundler`. CodeQL languages: `javascript-typescript`, `java-kotlin`, `python`, `go`, `rust`, `csharp`, `ruby`, `swift`,
 `cpp`. Check the current lists before relying on a new one.
+
+<!-- docs-nav:start -->
+---
+**Documentation:** [Start here](../../../docs/start-here.md) · [Guides](../../../docs/guides/new-project.md) · [Concepts](../../../docs/concepts.md) · [Reference](../../../docs/cli.md) · [Glossary](../../../docs/glossary.md) · [All pages](../../../docs/README.md)
+
+← [Troubleshooting](../../../docs/troubleshooting.md) · [What only the owner can do on GitHub](./github-settings.md) →
+<!-- docs-nav:end -->

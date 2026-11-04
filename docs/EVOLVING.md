@@ -1,4 +1,4 @@
-# How my-skills evolves
+# How this project evolves
 
 Every change goes through the same path, whoever makes it, a person or a coding agent. The path exists so that each change
 is designed before it is coded, and explained before it is released.
@@ -40,3 +40,9 @@ Conventional Commits, one concern per commit, in the order of this path (`docs(a
 `docs`). The pull request title is a Conventional Commit too: it becomes the commit on `main`. The template's checklist
 mirrors this document. The maintainer reviews and merges.
 
+<!-- docs-nav:start -->
+---
+**Documentation:** [Start here](./start-here.md) · [Guides](./guides/new-project.md) · [Concepts](./concepts.md) · [Reference](./cli.md) · [Glossary](./glossary.md) · [All pages](./README.md)
+
+← [Engineering](./ENGINEERING.md) · [Architecture decision records](./adr/README.md) →
+<!-- docs-nav:end -->

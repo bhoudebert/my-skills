@@ -1,4 +1,4 @@
-# Copilot instructions for my-skills
+# Copilot instructions for project-foundation
 
 The full rules are in `AGENTS.md` (read it). This is the short form, for tools that
 read only this file, such as code review; it must stay under about 4,000 characters.

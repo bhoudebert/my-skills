@@ -43,3 +43,10 @@ raw: no template tags are interpreted in them.
 The reviewer can use a local model through Ollama or any OpenAI-compatible server (LiteLLM, vLLM): see `.env.example` in the
 generated repository. A thinking model needs `SPEC_REVIEW_EXTRA_BODY={"think":false}` or it can loop until the context is full;
 `SPEC_REVIEW_MAX_TOKENS` caps the answer.
+
+<!-- docs-nav:start -->
+---
+**Documentation:** [Start here](../../../docs/start-here.md) · [Guides](../../../docs/guides/new-project.md) · [Concepts](../../../docs/concepts.md) · [Reference](../../../docs/cli.md) · [Glossary](../../../docs/glossary.md) · [All pages](../../../docs/README.md)
+
+← [The interview and the answers file](./interview.md) · [Engineering](../../../docs/ENGINEERING.md) →
+<!-- docs-nav:end -->

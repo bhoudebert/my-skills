@@ -8,11 +8,11 @@
   "answers": {
     "today": "2026-11-04",
     "year": "2026",
-    "project_name": "my-skills",
-    "project_slug": "my-skills",
+    "project_name": "project-foundation",
+    "project_slug": "project-foundation",
     "description": "Agent skills. project-foundation bootstraps a repository with one AGENTS.md for every coding agent, hooks, CI and releases.",
     "owner": "bhoudebert",
-    "repo": "my-skills",
+    "repo": "project-foundation",
     "profile": "node",
     "release_please": false,
     "codeql": true,
@@ -35,7 +35,7 @@
     "AGENTS.md": "33449458bb95965dc611427b005ddbb7cbc7d51c67e44d414d326fbe6ffb93b9",
     "CLAUDE.md": "3c2685678a392dba381b372c72e2fb833f5ec2a4a399f92af5fb96920cac4163",
     "GEMINI.md": "40d8dd38f7aed2d7c61a781103af556de6d83adf5b02eb057cd2f778e3d24e9f",
-    ".github/copilot-instructions.md": "486a6eeabd81d92fee3591a260df2f2b00cfed5451dd84b453c35a61ac83bdad",
+    ".github/copilot-instructions.md": "cc2112011cf46a978c9d1f1965a79f838a3cf9cec9a1ef8a2939db04ea41ebf7",
     ".github/instructions/tests.instructions.md": "2411eb89c059b7b625309cffec1f3ac82e53bb79e0d6fc1783f412a9f1f43ba2",
     ".github/instructions/docs.instructions.md": "d63df7aa44b19c983934adfaac3d9275bf5b213b186aa4326c13381501d9472e",
     "CONTRIBUTING.md": "ed58b3b8091bb405a34601a7d2069eaca027916ea10ca31c6bd225768ba4e0a7",
@@ -55,11 +55,11 @@
     "docs/adr/0003-one-agent-instruction-file.md": "8dd9e2ff4b31fbd6faa5eb60047ccd5f63d45be34831ce812a3db2966f64d4e3",
     ".github/pull_request_template.md": "50adee5597ba55eda0b334d22a2b3c8b2102f6c15b166a124337e0c5d33a0e93",
     ".github/ISSUE_TEMPLATE/bug_report.md": "37b89acb6af9aa5b5f86b60e2bc43ce1adb9a16efa97e63dce1635e1aadcf21e",
-    ".github/ISSUE_TEMPLATE/feature_request.md": "6730f16459fbb9a695e300581329f18a8fb7e4d773aa9833dab53ed48d22cd77",
+    ".github/ISSUE_TEMPLATE/feature_request.md": "83a44a6f7e500445b3f18398de02d95762be4660d08aa5bbf9015195f699540a",
     ".github/ISSUE_TEMPLATE/config.yml": "c46a9d3a3bd814a210040ad5e2c98359b1c50a88898e14e918d894c4f670b2be",
     ".github/CODEOWNERS": "a540a276d1fa831fdd2968375ee026b0af3ce986e4bf2fcb87aca9e2d4086e95",
     ".github/dependabot.yml": "48bb4e620335aa29df1adcea113f7d1db123e9b79fe8cb54922a2782693080f7",
-    ".github/workflows/ci.yml": "f64d3f3540e8d7cbb666ee73a84bf5ff72415348da96ad2a92f23696b1af8700",
+    ".github/workflows/ci.yml": "0ba1c6277152d09e14ea306ef68f356c16df46dfdf1365ff0460e2883a040686",
     ".github/workflows/pr-title.yml": "e23738f3cfedce1fe0b57d4546af1441728be1a84e769077f1a70d492fc5846e",
     ".github/workflows/codeql.yml": "f73ab42b43004d543f0d8603875668dec2a81e74bbc65f53ea628dc35d944078",
     ".githooks/commit-msg": "f887ab326e4b43a248eb9884e9aa14116760f719a4f89d2d22e88737a3b2d0bc",
@@ -68,5 +68,6 @@
     "scripts/conventional-commit-check.sh": "c9880cae48ca3e35c63c0a84925e2eb83f8eae14467dc3fe18a60833cc76af5d",
     "scripts/check-commit-messages.sh": "da1882b86c8c8ee457a23c81384de2e1e5d6def23796d5be54aa7f717ad6123b",
     "scripts/setup-hooks.sh": "cd17a4761b334378e046aceca36c53ba40cce51eb7ccf9b317890310cb8305f3"
-  }
+  },
+  "upgradedAt": "2026-11-04T10:58:10.157Z"
 }

@@ -1,6 +1,6 @@
 ---
 name: Feature request
-about: An idea for my-skills
+about: An idea for project-foundation
 labels: enhancement
 ---
 

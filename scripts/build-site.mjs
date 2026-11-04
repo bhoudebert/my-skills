@@ -12,6 +12,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { init, plan, upgrade } from "../skills/project-foundation/scripts/foundation.mjs";
 import { interview } from "../skills/project-foundation/scripts/lib/interview.mjs";
+import { buildDocsSite } from "./build-docs-site.mjs";
 
 const ROOT = path.join(path.dirname(fileURLToPath(import.meta.url)), "..");
 const SITE = path.join(ROOT, "site");
@@ -206,6 +207,7 @@ const controlsHtml = switches
 const stageDuration = (ms) => (ms < 1000 ? "Under a second" : `${(ms / 1000).toFixed(1)} seconds`);
 const replacements = {
   NAME: config.name,
+  SITE: config.site,
   REPO_URL: `https://github.com/${config.owner}/${config.repo}`,
   INSTALL: `npx skills add ${config.owner}/${config.repo}`,
   VERSION,
@@ -229,4 +231,5 @@ const left = html.match(/\{\{[A-Z_]+\}\}/g);
 if (left) throw new Error(`unfilled placeholders: ${[...new Set(left)].join(", ")}`);
 writeFileSync(path.join(SITE, "index.html"), html);
 rmSync(tmp, { recursive: true, force: true });
-console.log(`site/index.html written: ${data.files} files by default, generated in ${writeMs} ms, version ${VERSION}`);
+const docs = buildDocsSite();
+console.log(`site/index.html and ${docs.length} documentation pages written: ${data.files} files by default, generated in ${writeMs} ms, version ${VERSION}`);

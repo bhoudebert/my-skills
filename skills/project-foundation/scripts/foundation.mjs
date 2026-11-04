@@ -320,6 +320,8 @@ const USAGE = `Usage: project-foundation <command> [options]   (or: node foundat
               --interactive            ask even when no terminal is attached (answers on stdin)
   status    which skill version generated this repository, and have the templates changed since
   upgrade   what differs from the current templates; --apply writes the safe changes
+              --set key=value          change one answer (repeatable), e.g. --set nix=true; saved with --apply
+              --config <answers.json>  render with these answers instead of the recorded ones
   badges    a row of README badges that can say something true; --apply writes it under the first title
               --public | --private    the repository's visibility (else read from gh, else assumed private)
   list      the modules and files
@@ -355,6 +357,7 @@ export async function main(argv, out = console.log, input = process.stdin) {
       "dry-run": { type: "boolean" },
       force: { type: "boolean" },
       apply: { type: "boolean" },
+      set: { type: "string", multiple: true },
       public: { type: "boolean" },
       private: { type: "boolean" },
     },
@@ -412,7 +415,25 @@ export async function main(argv, out = console.log, input = process.stdin) {
       return 0;
     }
     case "upgrade": {
-      const r = upgrade({ target: path.resolve(values.target ?? "."), apply: values.apply, config: values.config ? readJson(values.config) : undefined });
+      const target = path.resolve(values.target ?? ".");
+      // --set key=value changes single answers on top of the recorded ones (or of --config): true, false and numbers are read as such.
+      let config = values.config ? readJson(values.config) : undefined;
+      if (values.set?.length) {
+        config = { ...(config ?? readProvenance(target).answers) };
+        for (const pair of values.set) {
+          const i = pair.indexOf("=");
+          if (i < 1) throw new UserError(`--set takes key=value, not '${pair}'`);
+          const raw = pair.slice(i + 1);
+          let value = raw;
+          try {
+            value = JSON.parse(raw);
+          } catch {
+            /* a plain string */
+          }
+          config[pair.slice(0, i)] = value;
+        }
+      }
+      const r = upgrade({ target, apply: values.apply, config });
       printList(values.apply ? "updated from the templates" : "can be updated from the templates (--apply)", r.update);
       printList(values.apply ? "created from the templates" : "new in the templates (--apply)", r.new);
       printList(`changed in the templates and edited here${values.apply ? " (the template is next to it as <file>.upstream)" : ""}`, r.conflict);

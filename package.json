@@ -1,5 +1,5 @@
 {
-  "name": "my-skills",
+  "name": "project-foundation",
   "version": "0.1.0",
   "private": true,
   "type": "module",
@@ -10,7 +10,10 @@
   "scripts": {
     "test": "node --test 'tests/**/*.test.mjs'",
     "quality": "npm test",
-    "site": "node scripts/build-site.mjs"
+    "site": "node scripts/build-site.mjs",
+    "docs": "node scripts/docs.mjs write",
+    "docs:check": "node scripts/docs.mjs check",
+    "images": "node scripts/build-images.mjs"
   },
   "license": "MIT",
   "bin": {
@@ -19,7 +22,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/bhoudebert/my-skills.git"
+    "url": "git+https://github.com/bhoudebert/project-foundation.git"
   },
-  "author": "bhoudebert"
+  "author": "bhoudebert",
+  "devDependencies": {
+    "marked": "^18.1.3"
+  }
 }

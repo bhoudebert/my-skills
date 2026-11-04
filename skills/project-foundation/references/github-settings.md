@@ -74,3 +74,10 @@ the generated `codeql.yml` (advanced setup); do not also enable "default setup",
 ## 6. Private vulnerability reporting
 
 Settings, Code security, "Private vulnerability reporting": on. `SECURITY.md` and the issue-template config point to it.
+
+<!-- docs-nav:start -->
+---
+**Documentation:** [Start here](../../../docs/start-here.md) · [Guides](../../../docs/guides/new-project.md) · [Concepts](../../../docs/concepts.md) · [Reference](../../../docs/cli.md) · [Glossary](../../../docs/glossary.md) · [All pages](../../../docs/README.md)
+
+← [Stacks: what the project must provide, and how to add one](./stacks.md) · [What each agent reads](./agent-instructions.md) →
+<!-- docs-nav:end -->

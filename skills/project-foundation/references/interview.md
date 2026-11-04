@@ -87,3 +87,10 @@ spec-review block. To add a component later, add it to the answers file, then us
 recorded in `.project-foundation.json` are used when `--config` is left out): it shows what the new answers and the current
 templates would change in the files that were generated, and `--apply` writes the safe ones and leaves a `<file>.upstream` next
 to any file edited here. `SKILL.md`, step 8, has the states.
+
+<!-- docs-nav:start -->
+---
+**Documentation:** [Start here](../../../docs/start-here.md) · [Guides](../../../docs/guides/new-project.md) · [Concepts](../../../docs/concepts.md) · [Reference](../../../docs/cli.md) · [Glossary](../../../docs/glossary.md) · [All pages](../../../docs/README.md)
+
+← [Monorepos with several stacks](./monorepo.md) · [The optional spec-driven module](./spec-driven.md) →
+<!-- docs-nav:end -->

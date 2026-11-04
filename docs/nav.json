@@ -1,0 +1,51 @@
+[
+  {
+    "title": "Start",
+    "pages": ["docs/README.md", "docs/start-here.md", "docs/getting-started.md"]
+  },
+  {
+    "title": "Guides",
+    "pages": [
+      "docs/guides/new-project.md",
+      "docs/guides/existing-repository.md",
+      "docs/guides/monorepo.md",
+      "docs/guides/keep-up-to-date.md",
+      "docs/guides/working-with-agents.md",
+      "docs/guides/github-setup.md"
+    ]
+  },
+  {
+    "title": "Concepts",
+    "pages": ["docs/concepts.md"]
+  },
+  {
+    "title": "Reference",
+    "pages": [
+      "docs/cli.md",
+      "docs/generated-files.md",
+      "docs/glossary.md",
+      "docs/troubleshooting.md",
+      "skills/project-foundation/references/stacks.md",
+      "skills/project-foundation/references/github-settings.md",
+      "skills/project-foundation/references/agent-instructions.md",
+      "skills/project-foundation/references/monorepo.md",
+      "skills/project-foundation/references/interview.md",
+      "skills/project-foundation/references/spec-driven.md"
+    ]
+  },
+  {
+    "title": "The project",
+    "pages": [
+      "docs/ENGINEERING.md",
+      "docs/EVOLVING.md",
+      "docs/adr/README.md",
+      "CONTRIBUTING.md",
+      "ROADMAP.md",
+      "CHANGELOG.md",
+      "SECURITY.md",
+      "SUPPORT.md",
+      "CODE_OF_CONDUCT.md",
+      "skills/project-foundation/references/maintenance.md"
+    ]
+  }
+]

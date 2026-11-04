@@ -19,3 +19,10 @@ when it would be used. An idea that cannot be described in those terms is not re
 
 - **A generator that keeps every agent file in sync.** One import line per tool is less machinery than a generator ([ADR 0003](docs/adr/0003-one-agent-instruction-file.md)).
 - **A model in the generating path.** The files must be the same every time and checkable by a test.
+
+<!-- docs-nav:start -->
+---
+**Documentation:** [Start here](./docs/start-here.md) · [Guides](./docs/guides/new-project.md) · [Concepts](./docs/concepts.md) · [Reference](./docs/cli.md) · [Glossary](./docs/glossary.md) · [All pages](./docs/README.md)
+
+← [Contributing](./CONTRIBUTING.md) · [Changelog](./CHANGELOG.md) →
+<!-- docs-nav:end -->

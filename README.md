@@ -1,84 +1,131 @@
-# project-foundation
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="docs/images/logo-dark.svg">
+    <img src="docs/images/logo.svg" width="96" alt="project-foundation: three dots, like ants, walking into one document">
+  </picture>
+</p>
 
-**One rules file for every coding agent.** `project-foundation` sets a repository up so that Claude Code, Codex, Gemini CLI and
-GitHub Copilot, and the people beside them, all work by the same rules: one `AGENTS.md`, git hooks and CI that enforce it, a
-workflow from idea to release, and decision records that explain why. For one project or a monorepo of several stacks.
+<h1 align="center">project-foundation</h1>
 
+<p align="center"><strong>One rules file for every coding agent.</strong><br>
+Claude, Codex, Gemini and Copilot follow it. Git and CI hold them to it.</p>
+
+<p align="center">
 <!-- badges:start -->
-[![CI](https://github.com/bhoudebert/my-skills/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/bhoudebert/my-skills/actions/workflows/ci.yml) [![CodeQL](https://github.com/bhoudebert/my-skills/actions/workflows/codeql.yml/badge.svg?branch=main)](https://github.com/bhoudebert/my-skills/actions/workflows/codeql.yml) [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+[![CI](https://github.com/bhoudebert/project-foundation/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/bhoudebert/project-foundation/actions/workflows/ci.yml) [![CodeQL](https://github.com/bhoudebert/project-foundation/actions/workflows/codeql.yml/badge.svg?branch=main)](https://github.com/bhoudebert/project-foundation/actions/workflows/codeql.yml) [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 <!-- badges:end -->
+</p>
 
-It is an [agent skill](https://github.com/vercel-labs/skills) and a command. Ask your agent to "bootstrap this repository", or
-run `project-foundation init` yourself: it reads your repository, asks only what it cannot see, shows what it would write, and
-writes it. It never overwrites a file, and `upgrade` later brings the generated files up to date without touching your edits.
+<p align="center">
+  <a href="docs/start-here.md"><strong>Start here</strong></a> ·
+  <a href="docs/getting-started.md">Quickstart</a> ·
+  <a href="docs/README.md">Guides</a> ·
+  <a href="docs/cli.md">Reference</a> ·
+  <a href="docs/glossary.md">Glossary</a> ·
+  <a href="https://bhoudebert.github.io/project-foundation/">Site</a>
+</p>
 
-## Install
+---
+
+AI coding assistants read **different files** to learn how your project works, so without shared rules each one guesses how to name
+a branch, word a commit, run the tests, or whether it may change `main`. `project-foundation` gives the repository **one** rulebook,
+`AGENTS.md`, and the guards that make it binding. Think of ants: a trail is laid once, and every ant follows it.
+
+<p align="center"><img src="docs/images/one-trail.svg" alt="Claude Code, Codex, Gemini CLI and GitHub Copilot each read their own file; every file leads to one AGENTS.md" width="860"></p>
+
+![Claude Code](https://img.shields.io/badge/Claude_Code-0b0c0e?style=flat-square&logo=claude&logoColor=white)
+![Codex](https://img.shields.io/badge/Codex-0b0c0e?style=flat-square)
+![Gemini CLI](https://img.shields.io/badge/Gemini_CLI-0b0c0e?style=flat-square&logo=googlegemini&logoColor=white)
+![GitHub Copilot](https://img.shields.io/badge/GitHub_Copilot-0b0c0e?style=flat-square&logo=githubcopilot&logoColor=white)
+&nbsp;&nbsp;
+![Node.js](https://img.shields.io/badge/Node.js-0b0c0e?style=flat-square&logo=nodedotjs&logoColor=white)
+![Java](https://img.shields.io/badge/Java-0b0c0e?style=flat-square&logo=openjdk&logoColor=white)
+![Rust](https://img.shields.io/badge/Rust-0b0c0e?style=flat-square&logo=rust&logoColor=white)
+![Python](https://img.shields.io/badge/Python-0b0c0e?style=flat-square&logo=python&logoColor=white)
+![Go](https://img.shields.io/badge/Go-0b0c0e?style=flat-square&logo=go&logoColor=white)
+![Nix](https://img.shields.io/badge/Nix-0b0c0e?style=flat-square&logo=nixos&logoColor=white)
+
+## Try it in a minute
+
+You need [Node](https://nodejs.org) 22 or later. From your repository:
 
 ```bash
-npx skills add bhoudebert/my-skills        # the skill, for the agents you choose (project scope; -g for every project)
-npx github:bhoudebert/my-skills init       # or run the command without installing anything
+npx github:bhoudebert/project-foundation init --dry-run    # shows what it would write; writes nothing
+npx github:bhoudebert/project-foundation init              # asks a few questions, shows a summary, writes
 ```
 
-Needs Node 22 or later. To keep the command on your `PATH`, run `npm link` in a clone: `project-foundation` and `my-skills`
-both point at it, and `git pull` updates it.
+It **looks** at your repository, **asks** only what it cannot see, **previews** every file, and **writes** them. It never overwrites a
+file. This is its real output:
 
-## Use
+<p align="center"><img src="docs/images/init-session.png" alt="The questions project-foundation asks, with the answers it proposes" width="640"></p>
 
-From the repository to set up:
+Prefer your agent to do it? Install the skill and say *"use project-foundation to bootstrap this repository"*:
 
 ```bash
-project-foundation init --dry-run     # see what it would write; nothing is written
-project-foundation init               # ask, confirm, write
-project-foundation status             # which version made this repository; did the templates change since
-project-foundation upgrade            # what differs from the current templates; --apply writes the safe changes
-project-foundation badges             # README badges that can say something true; --apply writes them
+npx skills add bhoudebert/project-foundation
 ```
 
-Or with an agent that has the skill installed: *"use project-foundation to bootstrap this repository"*. The agent looks first,
-sends one message with what it found and the choices it proposes, waits for your answer, and shows the file list before it writes.
+## Choose your path
+
+| You are… | Go to |
+| --- | --- |
+| **New to this** | [Start here](docs/start-here.md): the idea in plain words, then the [quickstart](docs/getting-started.md) |
+| **Starting a project** | [Start a new project](docs/guides/new-project.md) |
+| **Adding it to an existing repository** | [Add it without losing anything](docs/guides/existing-repository.md) |
+| **Keeping several languages in one repository** | [Set up a monorepo](docs/guides/monorepo.md) |
+| **Wondering what your agents will do** | [How your agents will behave](docs/guides/working-with-agents.md) |
+| **Someone who reads every sentence** | [Concepts](docs/concepts.md), the [command reference](docs/cli.md), [every generated file](docs/generated-files.md) |
 
 ## What you get
 
-About forty files, depending on your answers:
+About forty files, depending on your answers. [Each one is explained](docs/generated-files.md).
 
 | | |
 | --- | --- |
-| **Agent rules** | `AGENTS.md`, the single source; `CLAUDE.md` and `GEMINI.md` import it; `.github/copilot-instructions.md` is a short digest; path-specific Copilot files |
-| **Workflow** | `CONTRIBUTING.md` with the drawing from need to release, `docs/EVOLVING.md`, pull request and issue templates |
-| **Decisions** | `docs/adr/` with a template and three seed records |
-| **Enforcement** | tool-neutral shell hooks (Conventional Commits, no commit or push on the default branch, the quality gate before a push) and the same checks in CI |
-| **CI** | one workflow with a job per component and a single required check, `Quality gate`; the PR title check; CodeQL |
-| **Automation** | Dependabot; release-please when you want it |
-| **Community** | README skeleton, `SECURITY.md`, `SUPPORT.md`, `CODE_OF_CONDUCT.md`, `LICENSE`, `ROADMAP.md` |
+| **Agent rules** | `AGENTS.md` as the single source; `CLAUDE.md` and `GEMINI.md` import it; a short digest for Copilot; per-component files in a monorepo |
+| **Workflow** | `CONTRIBUTING.md` with the drawing from need to release, pull request and issue templates, decision records |
+| **Enforcement** | tool-neutral shell hooks and the same checks in CI, with one required check, `Quality gate` |
+| **Automation** | Dependabot, CodeQL, release-please when you want it |
+| **Community files** | `SECURITY`, `SUPPORT`, `CODE_OF_CONDUCT`, `LICENSE`, `ROADMAP` |
 | **Options** | a Nix dev shell with direnv; spec-driven development with a drift reviewer |
 
-Stacks: Node and TypeScript, Java (Maven, Gradle), Rust, Python, Go, and an "other" profile. A monorepo mixes them: each
-component gets its own job, toolchain pin, agent instructions and Dependabot entry.
+<details>
+<summary>See the files it writes for a Node project</summary>
+<p align="center"><img src="docs/images/generated-tree.png" alt="The list of files project-foundation init would create" width="520"></p>
+</details>
 
-## How it works
+## Enforced, not advised
 
-```mermaid
-flowchart LR
-  A["Your repository"] --> B["init: look, ask, preview, write"]
-  B --> C["AGENTS.md, hooks, CI, docs"]
-  C --> D[".project-foundation.json<br>answers and a hash of each file"]
-  D --> E["upgrade: new templates vs your edits"]
-  E -->|"as generated"| F["updated"]
-  E -->|"edited by you"| G["kept, new version beside it"]
+An instruction is a request; a hook or a required check is a rule. Hooks can be skipped on one machine, so CI checks the same things,
+and GitHub branch protection (which you switch on) is the final rule.
+
+<p align="center"><img src="docs/images/enforcement.svg" alt="Five layers from git hooks to branch protection, and whether each can be skipped" width="860"></p>
+
+An agent is also told to **check the branch before its first edit**: on `main` it branches without asking, on another branch it asks
+once, it stages only its own files, opens the pull request and never merges. [How agents behave](docs/guides/working-with-agents.md)
+
+## Kept up to date, without losing your edits
+
+`init` records its answers and a fingerprint of every file it wrote. `upgrade` later compares that record, your files and the new
+templates: files you did not touch are updated, files you edited are never overwritten, and when both changed the new version lands
+next to yours as `<file>.upstream`.
+
+<p align="center"><img src="docs/images/lifecycle.svg" alt="init records the files; upgrade compares three things and updates, keeps or sets aside each file" width="860"></p>
+
+```bash
+project-foundation status                            # which version made this; did the templates change since
+project-foundation upgrade                           # what differs; nothing is written
+project-foundation upgrade --set nix=true --apply    # change a choice, update the files, save the answer
 ```
 
-`init` records what it wrote. `upgrade` compares that record with the current templates: a file you have not touched is updated,
-a file you edited is never overwritten, and when both changed the new version lands next to yours as `<file>.upstream`.
+## Questions people ask
 
-## Documentation
+**Does it overwrite my files?** No. A file that exists is skipped and listed; `.gitignore` only gains lines.
+**Do contributors need the skill?** No. The rules, hooks and CI are plain files in the repository.
+**Is a model involved?** Not in generating: it is a Node script with no dependencies and no network.
+**Does it change GitHub settings?** No. It lists the commands and you run them.
 
-- [Getting started](docs/getting-started.md): from zero to a repository that follows the rules.
-- [Concepts](docs/concepts.md): one rulebook, enforcement in git and CI, branch before the first edit, upgrades, monorepos.
-- [Command reference](docs/cli.md): every command, option, answer and environment variable.
-- [Troubleshooting](docs/troubleshooting.md): the problems people actually hit, and what to do.
-- [Engineering](docs/ENGINEERING.md): how the engine is built, and how to change a template.
-- [Decision records](docs/adr/README.md) and [the workflow this repository follows](docs/EVOLVING.md).
-- [The site](https://bhoudebert.github.io/my-skills/) shows the real output of the tool.
+More in the [site](https://bhoudebert.github.io/project-foundation/) and in [Troubleshooting](docs/troubleshooting.md).
 
 ## Contributing
 

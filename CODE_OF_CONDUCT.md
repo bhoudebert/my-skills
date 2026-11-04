@@ -32,3 +32,10 @@ in proportion to the behaviour.
 
 Adapted from the Contributor Covenant, version 2.1, available at
 https://www.contributor-covenant.org/version/2/1/code_of_conduct.html
+
+<!-- docs-nav:start -->
+---
+**Documentation:** [Start here](./docs/start-here.md) · [Guides](./docs/guides/new-project.md) · [Concepts](./docs/concepts.md) · [Reference](./docs/cli.md) · [Glossary](./docs/glossary.md) · [All pages](./docs/README.md)
+
+← [Support](./SUPPORT.md) · [Working on the skill](./skills/project-foundation/references/maintenance.md) →
+<!-- docs-nav:end -->
